@@ -233,7 +233,7 @@
   function memories() {
     var box = $('#collage'), mem = C.memories || [];
     // Fill slots in this order so a few photos still look balanced
-    var ORDER = [7, 8, 3, 4, 0, 1, 2, 5, 6];
+    var ORDER = [7, 8, 0, 3, 4, 1, 2, 5, 6];
     var slotPhoto = {};
     ORDER.forEach(function (slot, k) { if (mem[k]) slotPhoto[slot] = mem[k]; });
     SLOTS.forEach(function (s, i) {

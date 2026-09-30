@@ -57,11 +57,10 @@ window.GIFT = {
   // Up to 9 photos around the heart. Put files in assets/photos/ ("" = soft placeholder).
   // focus = which part of the photo to keep when cropped, e.g. "50% 30%"
   memories: [
+    // Use different photos from heartPhoto and finalPhoto
     { src: "assets/photos/memory-1.jpg", caption: "The surprise that made my heart race", focus: "50% 58%" },
     { src: "assets/photos/memory-3.jpg", caption: "Twinning in white, obviously", focus: "50% 32%" },
-    { src: "assets/photos/memory-4.jpg", caption: "My favourite hug in the whole world", focus: "50% 30%" },
-    { src: "assets/photos/memory-2.jpg", caption: "Late nights, cheek to cheek", focus: "45% 60%" },
-    { src: "assets/photos/memory-5.jpg", caption: "Holding on to you, always", focus: "55% 33%" }
+    { src: "assets/photos/memory-4.jpg", caption: "My favourite hug in the whole world", focus: "50% 30%" }
   ],
 
   // --- Gift 2: the letter ---
