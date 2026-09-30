@@ -122,5 +122,5 @@ window.GIFT = {
   // Project Settings → API: copy the Project URL and the anon public key.
   // Leave both "" for demo mode (everything is saved in this browser only).
   supabaseUrl: "",
-  supabaseAnonKey: ""
+  supabaseAnonKey: "sb_publishable_iFPxkxE2uKqMRm1L2Edwcw_addc_teh"
 };
