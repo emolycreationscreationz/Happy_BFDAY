@@ -188,8 +188,15 @@
       v.muted = true; v.loop = true; v.preload = 'auto';
       v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
       if (C.videoPoster) v.poster = C.videoPoster;
-      v.src = C.video;
-      v.addEventListener('error', placeholder);
+      // MP4 first, WebM as a fallback for browsers without H.264
+      [[C.video, 'video/mp4'], [C.videoWebm, 'video/webm']].forEach(function (x) {
+        if (!x[0]) return;
+        var so = document.createElement('source');
+        so.src = x[0]; so.type = x[1];
+        v.appendChild(so);
+      });
+      var sources = v.querySelectorAll('source');
+      if (sources.length) sources[sources.length - 1].addEventListener('error', placeholder);
       box.appendChild(v);
       heroVideo = v;
 

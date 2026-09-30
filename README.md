@@ -40,6 +40,9 @@ Open `js/config.js`. Names, opening lines, wishes, photo captions, the letter, r
 - **AI video**: put the file in `assets/video/` (e.g. `wishes.mp4`, keep it under ~10 MB) and set
   `video: "assets/video/wishes.mp4"`. Set `videoAspect` to `"9/16"` (portrait), `"16/9"` or `"1/1"`.
   While `video` is empty a "video coming soon" placeholder is shown.
+  `videoWebm` is an optional fallback copy for browsers that can't play MP4 (e.g. some Linux browsers).
+  To shrink a new video before adding it:
+  `ffmpeg -i in.mp4 -c:v libx264 -crf 24 -preset slow -movflags +faststart -c:a aac -b:a 128k assets/video/wishes.mp4`
 - **Photos**: put them in `assets/photos/` (`.jpg`/`.webp`, around 800px wide is plenty), then set `src` for
   `heartPhoto` (middle) and up to 9 `memories`. `focus` picks which part stays visible when cropped (`"50% 30%"`).
   Empty `src` shows a soft pink placeholder.

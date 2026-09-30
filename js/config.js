@@ -8,14 +8,14 @@
  */
 window.GIFT = {
   // --- Names ---
-  hisName: "My Love",              // his name / nickname (shown big)
-  herName: "Your Girl",            // your name, used to sign the letter and the replies
+  hisName: "Appu",                  // his name / nickname (shown big)
+  herName: "Ammu",                  // your name, used to sign the letter and the replies
   pageTitle: "Happy Boyfriend's Day",
   date: "03 · 10 · 2026",          // small date on the envelope & hero
 
   // --- Opening: the envelope ---
   envelopeTo: "A little surprise for",
-  envelopeFrom: "from someone who adores you",
+  envelopeFrom: "with all my love, from Ammu",
   envelopeHint: "Tap the seal to open",
   // Lines typed out one by one after the envelope opens
   openingLines: [
@@ -25,14 +25,15 @@ window.GIFT = {
     "and how lucky I am to have you."
   ],
   openButton: "Open your gifts",
-  cardGreeting: "My love,",       // first line on the card inside the envelope
+  cardGreeting: "My Appu,",       // first line on the card inside the envelope
 
   // --- Wishes (first section) ---
   heroKicker: "Today is all about you",
   heroTitle: "Happy Boyfriend's Day",
   // AI video: put the file in assets/video/ and set the path. Leave "" to show a placeholder.
-  video: "",                       // e.g. "assets/video/wishes.mp4"
-  videoPoster: "",                 // e.g. "assets/video/wishes-poster.jpg" (optional)
+  video: "assets/video/wishes.mp4",
+  videoWebm: "assets/video/wishes.webm",   // fallback for browsers that can't play MP4
+  videoPoster: "assets/video/wishes-poster.jpg",
   videoAspect: "9/16",             // "9/16" portrait, "16/9" landscape, "1/1" square
   wishesTitle: "My wishes for you",
   wishes: [
@@ -70,14 +71,14 @@ window.GIFT = {
   // --- Gift 2: the letter ---
   letterLabel: "Gift 02",
   letterTitle: "A Letter For You",
-  letterGreeting: "My dearest love,",
+  letterGreeting: "My dearest Appu,",
   letter: [
     "I've tried so many times to put into words what you mean to me, and every time the words feel too small. But today is your day, so I'm going to try anyway.",
     "You came into my life so quietly, and somehow you changed everything. You made ordinary days feel like something worth remembering. You made the hard days lighter just by being there.",
     "Thank you for your patience when I'm difficult, for your laughter when I need it most, and for the way you look at me like I'm the only one in the room. Thank you for choosing me, again and again.",
     "I see how hard you work, how much you carry, and how gently you still treat the people you love. I don't always say it enough, so let me say it now: I am so proud of you.",
     "Whatever tomorrow brings, I hope you always remember this: you are loved, you are appreciated, and you will always have me cheering the loudest for you.",
-    "Happy Boyfriend's Day, my love. Today, and every day, I appreciate you."
+    "Happy Boyfriend's Day, Appu. Today, and every day, I appreciate you."
   ],
   letterClosing: "Forever yours,",
 
