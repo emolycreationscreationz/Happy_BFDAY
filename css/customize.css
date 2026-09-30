@@ -91,6 +91,13 @@ textarea { resize: vertical; line-height: 1.45; }
 .theme-pick[aria-pressed="true"] { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(233, 194, 122, .35); }
 
 .photos { display: grid; gap: 12px; }
+.list { display: grid; gap: 10px; }
+.list__row { display: grid; gap: 6px; padding: 10px 12px 12px; border-radius: 14px; border: 1px solid rgba(159, 176, 214, .18); background: rgba(2, 6, 16, .35); }
+.list__head { display: flex; align-items: center; justify-content: space-between; }
+.list__label { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+.list__remove { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(159, 176, 214, .25); background: transparent; color: var(--muted); cursor: pointer; line-height: 1; }
+.list textarea { resize: none; overflow: hidden; }
+.list__remove:hover { color: var(--danger); border-color: rgba(255, 107, 107, .5); }
 .photo { display: flex; gap: 14px; align-items: flex-start; padding: 12px; border-radius: 14px; border: 1px solid rgba(159, 176, 214, .18); background: rgba(2, 6, 16, .35); position: relative; }
 .photo__frame { position: relative; flex: none; cursor: crosshair; line-height: 0; border-radius: 8px; overflow: hidden; background: rgba(255, 255, 255, .05); min-width: 96px; min-height: 96px; display: grid; place-items: center; }
 .photo__frame img { max-width: 120px; max-height: 160px; display: block; }

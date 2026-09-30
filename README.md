@@ -54,7 +54,8 @@ The main link (no `?card=`) keeps showing the card in `js/config.js`.
   in Supabase → Table Editor → **cards** (the `data` column holds everything).
 - Photos are shrunk and re-saved in the browser before upload (fast, and hidden data such as GPS
   location is removed). Tapping a photo sets which part stays visible when cropped.
-- Videos up to 50 MB. No video → the video frame is hidden; no YouTube link → the cinema is hidden.
+- Client cards have no video (the video frame is hidden) and use the default date and title.
+  No YouTube link → the cinema is hidden.
 - Every opening of a card adds a row to **visits** with its `card_id`.
 
 ## Edit the main-link card

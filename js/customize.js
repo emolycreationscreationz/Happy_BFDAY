@@ -6,7 +6,6 @@
   var SBC = window.SUPABASE_CONFIG || {};
   var BUCKET = 'card-media';
   var MAX_PHOTOS = 9;
-  var MAX_VIDEO_MB = 50;
 
   if (!SBC.url || !SBC.key) { $('#setupWarn').hidden = false; $('#viewEdit').hidden = true; return; }
   var BASE = SBC.url.replace(/\/+$/, '');
@@ -65,15 +64,12 @@
   }
 
   /* ---------- form definition ---------- */
-  // type: text | lines (one per line) | paras (blank line between) | reasons | number | theme | photo | photos | video
+  // type: text | number | list (one box per item) | theme | photo | photos
   var SECTIONS = [
     { title: 'Names & colours', open: true, fields: [
       { k: 'hisName', type: 'text', label: 'Their name (shown big)', required: true, placeholder: 'e.g. Raj', clear: true },
       { k: 'herName', type: 'text', label: 'Your name', placeholder: 'e.g. Priya', clear: true },
-      { k: 'date', type: 'text', label: 'Date', help: 'Any format, e.g. 03 · 10 · 2026' },
-      { k: 'theme', type: 'theme', label: 'Colour theme' },
-      { k: 'titleLine1', type: 'text', label: 'Title, big word', help: 'e.g. Happy' },
-      { k: 'titleLine2', type: 'text', label: 'Title, second line', help: 'e.g. Boyfriend\'s Day, Birthday, Anniversary' }
+      { k: 'theme', type: 'theme', label: 'Colour theme' }
     ] },
     { title: 'Photos', open: true, fields: [
       { k: 'heartPhoto', type: 'photo', label: 'Big heart photo (middle)' },
@@ -86,15 +82,12 @@
       { k: 'youtubeStart', type: 'number', label: 'Start the song at (seconds)' }
     ] },
     { title: 'Messages', fields: [
-      { k: 'openingLines', type: 'lines', label: 'Message typed when the envelope opens', help: 'One line per row.' },
-      { k: 'wishes', type: 'lines', label: 'Wishes', help: 'One wish per row.' },
+      { k: 'openingLines', type: 'list', label: 'Message typed when the envelope opens', item: 'Line', max: 8 },
+      { k: 'wishes', type: 'list', label: 'Wishes', item: 'Wish', max: 10 },
       { k: 'letterGreeting', type: 'text', label: 'Letter greeting' },
-      { k: 'letter', type: 'paras', label: 'Letter', help: 'Leave an empty line between paragraphs.' },
+      { k: 'letter', type: 'list', label: 'Letter', item: 'Paragraph', max: 10, long: true },
       { k: 'letterClosing', type: 'text', label: 'Letter closing' },
-      { k: 'reasons', type: 'reasons', label: 'Reasons I appreciate you (flip cards)', help: 'One reason per row.' }
-    ] },
-    { title: 'Video (optional)', fields: [
-      { k: 'video', type: 'video', label: 'A short video (plays silently on a loop)', help: 'MP4 or MOV, up to ' + MAX_VIDEO_MB + ' MB. Under 15 MB loads best on phones.' }
+      { k: 'reasons', type: 'list', label: 'Reasons I appreciate you', item: 'Flip card', max: 12, reasons: true }
     ] }
   ];
 
@@ -117,6 +110,7 @@
       sec.fields.forEach(function (f) { body.appendChild(field(f, data[f.k])); });
       det.appendChild(body);
       form.appendChild(det);
+      det.addEventListener('toggle', function () { body.querySelectorAll('.list textarea').forEach(function (t) { t.dispatchEvent(new Event('input')); }); });
     });
     form.oninput = markDirty;
     $('#viewEdit').hidden = false; $('#viewDone').hidden = true;
@@ -146,21 +140,8 @@
         getters[f.k] = function () { return f.type === 'number' ? (+input.value || 0) : input.value.trim(); };
         return wrap(f, input);
 
-      case 'lines':
-      case 'paras':
-      case 'reasons':
-        input = el('textarea'); input.id = id;
-        var arr = value || [];
-        if (f.type === 'reasons') arr = arr.map(function (r) { return r.back; });
-        input.value = arr.join(f.type === 'paras' ? '\n\n' : '\n');
-        input.rows = f.type === 'paras' ? 12 : Math.max(4, arr.length + 1);
-        getters[f.k] = function () {
-          var parts = f.type === 'paras' ? input.value.split(/\n\s*\n/) : input.value.split('\n');
-          parts = parts.map(function (x) { return x.replace(/\s+/g, ' ').trim(); }).filter(Boolean);
-          if (f.type === 'reasons') parts = parts.map(function (b, i) { return { front: 'Reason #' + (i + 1), back: b }; });
-          return parts;
-        };
-        return wrap(f, input);
+      case 'list':
+        return listField(f, value || []);
 
       case 'theme':
         var box = el('div', 'themes'); box.id = id;
@@ -187,9 +168,6 @@
 
       case 'photos':
         return photosField(f, value || []);
-
-      case 'video':
-        return videoField(f);
     }
   }
 
@@ -288,78 +266,51 @@
     return w;
   }
 
-  /* ---------- video ---------- */
-  function videoField(f) {
-    var state = { video: '', poster: '', aspect: '9/16' };
-    var box = el('div', 'video');
-    var vid = el('video'); vid.muted = true; vid.playsInline = true; vid.loop = true; vid.controls = true;
-    var status = el('p', 'field__help');
-    var file = el('input'); file.type = 'file'; file.accept = 'video/mp4,video/webm,video/quicktime'; file.hidden = true;
-    var pick = el('button', 'btn btn--ghost btn--sm'); pick.type = 'button';
-    var rm = el('button', 'btn btn--ghost btn--sm', 'Remove'); rm.type = 'button';
-    var row = el('div', 'photo__buttons'); row.appendChild(pick); row.appendChild(rm);
-    box.appendChild(vid); box.appendChild(row); box.appendChild(status); box.appendChild(file);
-    function render() {
-      vid.hidden = !state.video; rm.hidden = !state.video;
-      pick.textContent = state.video ? 'Replace video' : 'Upload video';
-      if (state.video && vid.getAttribute('src') !== state.video) { vid.src = state.video; if (state.poster) vid.poster = state.poster; }
+  /* ---------- lists: one box per item (lines, wishes, letter paragraphs, flip cards) ---------- */
+  function listField(f, values) {
+    var box = el('div', 'list');
+    var rows = [];
+    var add = el('button', 'btn btn--ghost btn--sm', '+ Add ' + f.item.toLowerCase()); add.type = 'button';
+    function renumber() {
+      rows.forEach(function (r, i) { r.label.textContent = f.item + ' ' + (i + 1); });
+      add.hidden = rows.length >= f.max;
     }
-    pick.addEventListener('click', function () { file.click(); });
-    rm.addEventListener('click', function () {
-      state = { video: '', poster: '', aspect: state.aspect };
-      vid.removeAttribute('src'); vid.load(); status.textContent = ''; render(); markDirty();
-    });
-    file.addEventListener('change', function () {
-      var fl = file.files[0]; file.value = '';
-      if (!fl) return;
-      if (fl.size > MAX_VIDEO_MB * 1048576) { toast('That video is ' + Math.round(fl.size / 1048576) + ' MB. The limit is ' + MAX_VIDEO_MB + ' MB.', 5000); return; }
-      box.classList.add('uploading');
-      status.textContent = 'Uploading ' + Math.max(1, Math.round(fl.size / 1048576)) + ' MB… keep this page open.';
-      busy++;
-      videoInfo(fl).then(function (info) {
-        return Promise.all([
-          uploadBlob(fl, (fl.name.split('.').pop() || 'mp4').toLowerCase(), fl.type || 'video/mp4'),
-          info.poster ? uploadBlob(info.poster, 'jpg', 'image/jpeg') : Promise.resolve('')
-        ]).then(function (urls) {
-          state = { video: urls[0], poster: urls[1], aspect: info.aspect };
-          render(); markDirty();
-          status.textContent = 'Uploaded ✓';
-        });
-      }).catch(function (err) {
-        status.textContent = '';
-        toast('Video upload failed: ' + err.message, 5000);
-      }).then(function () { busy--; box.classList.remove('uploading'); });
-    });
-    render();
-    getters.video = function () { return state.video; };
-    getters.videoPoster = function () { return state.poster; };
-    getters.videoAspect = function () { return state.aspect; };
-    getters.videoWebm = function () { return ''; };
-    return wrap(f, box);
-  }
-
-  // Read the video's shape and grab a still frame to show while it loads
-  function videoInfo(file) {
-    return new Promise(function (resolve) {
-      var v = document.createElement('video'), url = URL.createObjectURL(file), done = false;
-      v.muted = true; v.playsInline = true; v.preload = 'auto'; v.src = url;
-      function finish(info) { if (done) return; done = true; URL.revokeObjectURL(url); resolve(info); }
-      setTimeout(function () { finish({ aspect: '9/16', poster: null }); }, 8000);
-      v.addEventListener('error', function () { finish({ aspect: '9/16', poster: null }); });
-      v.addEventListener('loadedmetadata', function () {
-        var w = v.videoWidth, h = v.videoHeight;
-        var aspect = w && h ? (Math.abs(w - h) < w * 0.05 ? '1/1' : w > h ? '16/9' : '9/16') : '9/16';
-        v.currentTime = Math.min(1, (v.duration || 2) / 2);
-        v.addEventListener('seeked', function () {
-          try {
-            var c = document.createElement('canvas'), s = Math.min(1, 1080 / Math.max(w, h));
-            c.width = Math.round(w * s); c.height = Math.round(h * s);
-            c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
-            c.toBlob(function (b) { finish({ aspect: aspect, poster: b }); }, 'image/jpeg', 0.82);
-          } catch (e) { finish({ aspect: aspect, poster: null }); }
-        }, { once: true });
+    function addRow(text) {
+      var row = el('div', 'list__row');
+      var label = el('label', 'list__label');
+      var input = el('textarea');
+      input.id = 'f' + (++uid);
+      label.htmlFor = input.id;
+      input.rows = f.long ? 4 : 2;
+      input.value = text || '';
+      // grow with the text so the whole message is always visible
+      var grow = function () { input.style.height = 'auto'; input.style.height = input.scrollHeight + 2 + 'px'; };
+      input.addEventListener('input', grow);
+      requestAnimationFrame(grow);
+      var rm = el('button', 'list__remove', '✕'); rm.type = 'button';
+      rm.setAttribute('aria-label', 'Remove');
+      var r = { row: row, label: label, input: input };
+      rm.addEventListener('click', function () {
+        rows.splice(rows.indexOf(r), 1); row.remove(); renumber(); markDirty();
       });
-    });
+      var head = el('div', 'list__head'); head.appendChild(label); head.appendChild(rm);
+      row.appendChild(head); row.appendChild(input);
+      box.appendChild(row);
+      rows.push(r);
+      renumber();
+      return r;
+    }
+    (f.reasons ? values.map(function (x) { return x.back; }) : values).forEach(addRow);
+    if (!rows.length) addRow('');
+    add.addEventListener('click', function () { addRow('').input.focus(); markDirty(); });
+    getters[f.k] = function () {
+      var parts = rows.map(function (r) { return r.input.value.replace(/\s+/g, ' ').trim(); }).filter(Boolean);
+      if (f.reasons) parts = parts.map(function (b, i) { return { front: 'Reason #' + (i + 1), back: b }; });
+      return parts;
+    };
+    var w = wrap(f, box);
+    w.appendChild(add);
+    return w;
   }
 
   /* ---------- photo uploads ---------- */
