@@ -72,10 +72,10 @@ While the Supabase fields are empty the page runs in **demo mode**: kisses and r
 
 ## Deploy (GitHub Pages)
 
-`.github/workflows/pages.yml` publishes the site on every push.
-One-time setup: repo **Settings → Pages → Source: GitHub Actions**.
-The site is then at `https://<user>.github.io/<repo>/` (the first build takes 1–2 minutes;
-progress is under the **Actions** tab).
+One-time setup: repo **Settings → Pages → Source: Deploy from a branch**, pick the branch and
+`/ (root)`, then **Save**. The site is then at `https://<user>.github.io/<repo>/` (each push goes
+live in 1–2 minutes; progress is under the **Actions** tab). `.nojekyll` makes GitHub serve the
+files as-is.
 
 ## Deploy (Netlify / Vercel)
 
