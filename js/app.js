@@ -178,7 +178,6 @@
       ph.appendChild(el('span', null, 'A little video for you is on its way…'));
       ph.appendChild(el('small', null, 'coming soon'));
       box.appendChild(ph);
-      $('#videoSound').hidden = true;
       heroVideo = null;
     }
 
@@ -200,15 +199,6 @@
       box.appendChild(v);
       heroVideo = v;
 
-      var btn = $('#videoSound');
-      btn.hidden = false;
-      btn.addEventListener('click', function () {
-        v.muted = !v.muted;
-        if (!v.muted) v.play().catch(function () {});
-        btn.classList.toggle('on', !v.muted);
-        btn.setAttribute('aria-label', v.muted ? 'Turn sound on' : 'Turn sound off');
-        btn.innerHTML = '<svg><use href="#i-' + (v.muted ? 'mute' : 'sound') + '"/></svg>';
-      });
       // Pause when scrolled away, resume when back in view
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (en) {

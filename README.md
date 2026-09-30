@@ -9,7 +9,7 @@ Theme: royal blue · gold · black, with blue and ivory roses, fairy lights and 
 1. **Envelope (full screen)**: the whole screen is a rose-velvet envelope with rose bouquets, a gold frame and a
    beating wax-heart seal. Tap it and the seal cracks in two, the flap swings open, a card rises out of the
    envelope and your message types itself out. Then *Open your gifts*.
-2. **Wishes**: "Happy Boyfriend's Day, *name*", the **AI video** in a glowing arch frame (tap 🔈 for sound),
+2. **Wishes**: "Happy Boyfriend's Day, *name*", the **AI video** in a glowing arch frame (silent, looping),
    then the wish cards.
 3. **Nudge**: a wiggling gift box: *"Wait… there's more! Keep scrolling…"*
 4. **Gift 01 · Memories**: polaroids fly into a **heart shape** around a beating heart photo. Tap any photo to open it.
@@ -42,7 +42,7 @@ Open `js/config.js`. Names, opening lines, wishes, photo captions, the letter, r
   While `video` is empty a "video coming soon" placeholder is shown.
   `videoWebm` is an optional fallback copy for browsers that can't play MP4 (e.g. some Linux browsers).
   To shrink a new video before adding it:
-  `ffmpeg -i in.mp4 -c:v libx264 -crf 24 -preset slow -movflags +faststart -c:a aac -b:a 128k assets/video/wishes.mp4`
+  `ffmpeg -i in.mp4 -c:v libx264 -crf 24 -preset slow -movflags +faststart -an assets/video/wishes.mp4`
 - **Photos**: put them in `assets/photos/` (`.jpg`/`.webp`, around 800px wide is plenty), then set `src` for
   `heartPhoto` (middle) and up to 9 `memories`. `focus` picks which part stays visible when cropped (`"50% 30%"`).
   Empty `src` shows a soft pink placeholder.
