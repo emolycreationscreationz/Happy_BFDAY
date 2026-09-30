@@ -174,7 +174,6 @@
     <symbol id="i-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></symbol>
     <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.7l-10-6.5A1 1 0 0 0 8 5.5Z"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></symbol>
-    <symbol id="i-send" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M21 3L10 14M21 3l-7 18-4-7-7-4z"/></symbol>
     <symbol id="i-camera" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 8h3l2-3h6l2 3h3v11H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></symbol>
     <symbol id="i-film" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4zM8 4v16M16 4v16M4 8h4M4 12h4M4 16h4M16 8h4M16 12h4M16 16h4"/></symbol>
     <symbol id="i-pen" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L19 8a2.1 2.1 0 0 0-3-3L5 16zM14 7l3 3"/></symbol>
@@ -387,24 +386,10 @@
 
     <div class="reasons" id="reasons"></div>
 
-    <div class="love-box reveal">
-      <button class="love-btn" id="loveBtn" type="button" aria-label="Send a kiss">
-        <svg><use href="#i-heart"/></svg>
-      </button>
-      <p class="love-box__label" data-f="loveButton"></p>
-      <p class="love-box__count"><strong id="loveCount">0</strong> <span data-f="loveCounterLabel"></span></p>
-    </div>
-
-    <form class="reply reveal" id="replyForm" autocomplete="off">
-      <svg class="reply__rose" viewBox="0 0 260 220" aria-hidden="true"><use href="#roseCorner"/></svg>
-      <h3 class="reply__title gold-script" data-f="replyTitle"></h3>
-      <input class="reply__name" id="replyName" maxlength="60" required aria-label="Your name">
-      <textarea class="reply__msg" id="replyMsg" rows="4" maxlength="1500" required aria-label="Your message"></textarea>
-      <button class="btn btn--glow" type="submit" id="replySend">
-        <svg><use href="#i-send"/></svg><span data-f="replyButton"></span>
-      </button>
-      <p class="reply__thanks" id="replyThanks" hidden><svg><use href="#i-heart"/></svg> <span data-f="replyThanks"></span></p>
-    </form>
+    <figure class="us-photo reveal" id="usPhoto">
+      <div class="us-photo__frame"><div class="us-photo__img" id="usPhotoImg"></div></div>
+      <figcaption class="us-photo__cap" id="usPhotoCap"></figcaption>
+    </figure>
 
     <footer class="footer">
       <svg class="footer__posy" viewBox="-140 -70 280 140" aria-hidden="true"><use href="#posy" x="-140" y="-70" width="280" height="140"/></svg>
@@ -431,8 +416,6 @@
     <figcaption id="lightboxCap"></figcaption>
   </figure>
 </div>
-
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="js/config.js?v=2"></script>
 <script src="js/app.js?v=2"></script>

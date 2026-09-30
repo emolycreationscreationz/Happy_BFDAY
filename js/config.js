@@ -9,7 +9,7 @@
 window.GIFT = {
   // --- Names ---
   hisName: "Appu",                  // his name / nickname (shown big)
-  herName: "Ammu",                  // your name, used to sign the letter and the replies
+  herName: "Ammu",                  // your name, used on the envelope and to sign the letter
   pageTitle: "Happy Boyfriend's Day",
   date: "03 · 10 · 2026",          // small date on the envelope & hero
 
@@ -53,19 +53,15 @@ window.GIFT = {
   memoriesTitle: "Our Little Memories",
   memoriesSub: "Every picture, a piece of my favourite story. Tap one to open it.",
   // Main photo in the middle of the heart
-  heartPhoto: { src: "", caption: "Us, my favourite place to be" },
+  heartPhoto: { src: "assets/photos/memory-2.jpg", caption: "Us, my favourite place to be", focus: "45% 60%" },
   // Up to 9 photos around the heart. Put files in assets/photos/ ("" = soft placeholder).
   // focus = which part of the photo to keep when cropped, e.g. "50% 30%"
   memories: [
-    { src: "", caption: "The day it all started", focus: "50% 50%" },
-    { src: "", caption: "Our first date", focus: "50% 50%" },
-    { src: "", caption: "That smile I fell for", focus: "50% 50%" },
-    { src: "", caption: "Our silly moments", focus: "50% 50%" },
-    { src: "", caption: "Adventures together", focus: "50% 50%" },
-    { src: "", caption: "Late night talks", focus: "50% 50%" },
-    { src: "", caption: "You, being you", focus: "50% 50%" },
-    { src: "", caption: "My safe place", focus: "50% 50%" },
-    { src: "", caption: "Many more to come", focus: "50% 50%" }
+    { src: "assets/photos/memory-1.jpg", caption: "The surprise that made my heart race", focus: "50% 58%" },
+    { src: "assets/photos/memory-3.jpg", caption: "Twinning in white, obviously", focus: "50% 32%" },
+    { src: "assets/photos/memory-4.jpg", caption: "My favourite hug in the whole world", focus: "50% 30%" },
+    { src: "assets/photos/memory-2.jpg", caption: "Late nights, cheek to cheek", focus: "45% 60%" },
+    { src: "assets/photos/memory-5.jpg", caption: "Holding on to you, always", focus: "55% 33%" }
   ],
 
   // --- Gift 2: the letter ---
@@ -106,13 +102,8 @@ window.GIFT = {
     { front: "Reason #5", back: "You believe in me more than I believe in myself." },
     { front: "Reason #6", back: "You are simply, wonderfully, you." }
   ],
-  loveButton: "Tap to send a kiss back",
-  loveCounterLabel: "kisses sent",
-  replyTitle: "Write something back to me",
-  replyPlaceholder: "Tell me how you feel…",
-  replyNamePlaceholder: "Your name",
-  replyButton: "Send with love",
-  replyThanks: "Received! I'll read it with the biggest smile",
+  // Framed photo near the end ("" src = hidden)
+  finalPhoto: { src: "assets/photos/memory-5.jpg", caption: "Here's to us, Appu. Always.", focus: "55% 35%" },
 
   closingLine: "Happy Boyfriend's Day",
   footer: "Made with love",

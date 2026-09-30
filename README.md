@@ -16,8 +16,7 @@ Theme: royal blue · gold · black, with blue and ivory roses, fairy lights and 
 5. **Gift 02 · Letter**: a handwritten letter on lined paper; each paragraph fades in as he scrolls.
 6. **Gift 03 · Cinema**: marquee lights, red curtains and two glowing seats (*you* and *me*).
    *Open the curtains* plays the **YouTube song** right on the screen.
-7. **I Appreciate You**: flip cards with reasons, a *send a kiss back* button (live counter) and a
-   *write something back to me* form. Both go to **Supabase**.
+7. **I Appreciate You**: flip cards with reasons, heart fireworks, and a framed photo of you two.
 
 There are also falling rose petals and floating hearts across the page, little hearts wherever he taps, and a heart in the corner that fills up as he scrolls.
 
@@ -44,31 +43,22 @@ Open `js/config.js`. Names, opening lines, wishes, photo captions, the letter, r
   To shrink a new video before adding it:
   `ffmpeg -i in.mp4 -c:v libx264 -crf 24 -preset slow -movflags +faststart -an assets/video/wishes.mp4`
 - **Photos**: put them in `assets/photos/` (`.jpg`/`.webp`, around 800px wide is plenty), then set `src` for
-  `heartPhoto` (middle) and up to 9 `memories`. `focus` picks which part stays visible when cropped (`"50% 30%"`).
+  `heartPhoto` (middle), up to 9 `memories` and `finalPhoto` (framed photo near the end). `focus` picks which part stays visible when cropped (`"50% 30%"`).
   Empty `src` shows a soft pink placeholder.
 - **YouTube song**: paste any link into `youtubeUrl` (`https://youtu.be/…`, `…watch?v=…`, shorts all work).
   `youtubeStart` starts it at a given second (a `?t=45` in the link works too).
 - **Colours**: the variables at the top of `css/style.css` (`--rose`, `--gold`, `--bg`, …).
 
-## Supabase (kisses counter, replies, "he opened it")
+## Supabase ("he opened it")
 
 1. Create a free project at [supabase.com](https://supabase.com).
 2. **SQL Editor → New query**, paste all of `supabase/schema.sql`, **Run**.
-3. **Project Settings → API**: copy the **Project URL** and the **anon / publishable** key into
+3. Copy the **Project URL** and the **publishable** (or legacy anon) key into
    `supabaseUrl` and `supabaseAnonKey` in `js/config.js`.
 
-What you get in **Table Editor**:
-
-| table     | what it holds                                   |
-|-----------|-------------------------------------------------|
-| `visits`  | a row every time the envelope is opened (time + device) |
-| `replies` | every message he writes back                     |
-| `kisses`  | the total number of kisses sent                  |
-
-The page can only *add* rows. It can't read visits or replies, so nobody with the link can see his messages;
-only you can, in the dashboard. The anon key is meant to be public, so it's fine in `config.js`.
-
-While the Supabase fields are empty the page runs in **demo mode**: kisses and replies are saved in that browser only.
+Every time the envelope is opened, a row (time + device) is added to the `visits` table.
+See it in **Table Editor**. The page can only add rows, never read them, and the publishable key
+is meant to be public. Leave both fields empty to turn this off.
 
 ## Deploy (GitHub Pages)
 

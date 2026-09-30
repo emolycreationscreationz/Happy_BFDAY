@@ -15,16 +15,6 @@
     if (text != null) e.textContent = text;
     return e;
   }
-  function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
-  function load(k, def) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch (e) { return def; } }
-  function toast(msg) {
-    var t = $('#toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(toast.timer);
-    toast.timer = setTimeout(function () { t.classList.remove('show'); }, 2800);
-  }
-
   /* ---------- Supabase (REST, no library needed) ---------- */
   var SB = (C.supabaseUrl && C.supabaseAnonKey) ? C.supabaseUrl.replace(/\/+$/, '') + '/rest/v1/' : '';
   function sb(path, body) {
@@ -32,7 +22,7 @@
     var h = { apikey: C.supabaseAnonKey, 'Content-Type': 'application/json' };
     // Legacy anon keys are JWTs and go in Authorization too; new sb_publishable_ keys don't
     if (/^eyJ/.test(C.supabaseAnonKey)) h.Authorization = 'Bearer ' + C.supabaseAnonKey;
-    if (path.indexOf('rpc/') !== 0) h.Prefer = 'return=minimal';
+    h.Prefer = 'return=minimal';
     return fetch(SB + path, { method: 'POST', headers: h, body: JSON.stringify(body || {}) }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.status === 204 ? null : r.json().catch(function () { return null; });
@@ -46,9 +36,6 @@
       if (v != null) e.textContent = v;
     });
     if (C.pageTitle) document.title = C.pageTitle + (C.hisName ? ' · ' + C.hisName : '');
-    $('#replyName').placeholder = C.replyNamePlaceholder || 'Your name';
-    $('#replyMsg').placeholder = C.replyPlaceholder || '';
-    if (C.hisName) $('#replyName').value = C.hisName;
   }
 
   /* ---------- Heart burst ---------- */
@@ -245,8 +232,12 @@
 
   function memories() {
     var box = $('#collage'), mem = C.memories || [];
+    // Fill slots in this order so a few photos still look balanced
+    var ORDER = [7, 8, 3, 4, 0, 1, 2, 5, 6];
+    var slotPhoto = {};
+    ORDER.forEach(function (slot, k) { if (mem[k]) slotPhoto[slot] = mem[k]; });
     SLOTS.forEach(function (s, i) {
-      var m = mem[i], node;
+      var m = slotPhoto[i], node;
       if (m) {
         node = el('button', 'polaroid');
         node.type = 'button';
@@ -360,7 +351,7 @@
     });
   }
 
-  /* ---------- Finale: reasons, kisses, reply ---------- */
+  /* ---------- Finale: reasons and our photo ---------- */
   function finale() {
     var box = $('#reasons');
     (C.reasons || []).forEach(function (r, i) {
@@ -382,63 +373,14 @@
       box.appendChild(b);
     });
 
-    // Kisses counter
-    var count = $('#loveCount'), total = load('bf-kisses', 0), pending = 0, timer;
-    function show(n) {
-      count.textContent = Number(n).toLocaleString();
-      count.classList.remove('bump'); void count.offsetWidth; count.classList.add('bump');
+    // Final framed photo of us
+    var fp = C.finalPhoto || {};
+    if (fp.src) {
+      $('#usPhotoImg').appendChild(photo(fp.src, fp.focus, 1, fp.caption));
+      $('#usPhotoCap').textContent = fp.caption || '';
+    } else {
+      $('#usPhoto').remove();
     }
-    show(total);
-    if (SB) {
-      sb('rpc/get_kisses').then(function (n) { if (n != null) { total = +n; show(total); } }).catch(function () {});
-    }
-    function flush() {
-      var n = pending; pending = 0;
-      if (!n) return;
-      sb('rpc/add_kisses', { amount: n })
-        .then(function (t) { if (t != null) { total = +t; show(total); } })
-        .catch(function (err) { if (err.message !== 'demo') pending += n; });
-    }
-    var btn = $('#loveBtn');
-    btn.addEventListener('click', function (e) {
-      total++; pending++;
-      save('bf-kisses', total);
-      show(total);
-      btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop');
-      var r = btn.getBoundingClientRect();
-      burst(r.left + r.width / 2, r.top + r.height / 2, 12, 130);
-      clearTimeout(timer);
-      timer = setTimeout(flush, 900);
-    });
-    window.addEventListener('pagehide', flush);
-
-    // Reply
-    var form = $('#replyForm');
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var name = $('#replyName').value.trim(), msg = $('#replyMsg').value.trim();
-      if (!name || !msg) return;
-      var send = $('#replySend');
-      send.disabled = true;
-      function ok() {
-        $('#replyMsg').value = '';
-        $('#replyThanks').hidden = false;
-        var r = send.getBoundingClientRect();
-        burst(r.left + r.width / 2, r.top + r.height / 2, 30, 200);
-        send.disabled = false;
-      }
-      if (!SB) {
-        var saved = load('bf-replies', []);
-        saved.push({ name: name, message: msg, at: new Date().toISOString() });
-        save('bf-replies', saved);
-        ok();
-        return;
-      }
-      sb('replies', { name: name, message: msg }).then(ok).catch(function () {
-        send.disabled = false;
-        toast("Couldn't send it, please try again");
-      });
-    });
   }
 
   /* ---------- Scroll reveal ---------- */
