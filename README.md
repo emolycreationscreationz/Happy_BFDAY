@@ -24,46 +24,38 @@ There are also falling rose petals and floating hearts across the page, little h
 
 ```
 index.html                  the card page
-customize.html              ⭐ Card Studio: create & edit client cards (login)
+customize.html              ⭐ clients make their own card here (no login)
 css/style.css               card design & animations (designed in blue)
-css/customize.css           Card Studio design
+css/customize.css           customize page design
 js/config.js                the main-link card (Appu & Ammu)
 js/defaults.js              template text used by new client cards
 js/supabase.js              Supabase URL + publishable key (shared)
 js/theme.js                 colour themes (blue, rose, red, purple, teal, black)
 js/app.js                   the card: loads ?card=…, envelope, collage, cinema…
-js/customize.js             Card Studio logic (login, uploads, save)
+js/customize.js             customize page (form, uploads, create)
 assets/photos, assets/video media for the main-link card
 supabase/schema.sql         database + storage setup (run once in Supabase)
 ```
 
-## Client cards (Card Studio)
+## Client cards (customize page)
 
-One site, many couples. Each card has its own link: `https://<site>/?card=raj-priya`.
+One site, many couples. Clients make their own card, no login:
+
+1. Send them `https://<site>/customize.html`.
+2. They type the names, pick a colour, upload photos (and an optional video), write their
+   messages, paste a YouTube link and tap **Create my card**.
+3. They get their own link, e.g. `https://<site>/?card=raj-priya-7k2f`, with Copy / Open /
+   Share on WhatsApp buttons.
+
 The main link (no `?card=`) keeps showing the card in `js/config.js`.
 
-**One-time setup**
-1. Supabase → **SQL Editor** → run all of `supabase/schema.sql` (safe to re-run).
-2. Supabase → **Authentication → Users → Add user → Create new user**: your email + a password,
-   tick **Auto Confirm User**.
-3. Supabase → **Authentication → Sign In / Providers** → turn **off** "Allow new users to sign up",
-   so nobody else can make an account.
-
-**Making a card**
-1. Open `https://<site>/customize.html` and sign in.
-2. **+ New card** → fill in the names (the link name is suggested from them), pick a colour theme,
-   write the text, upload photos and a video, paste the YouTube link → **Save**.
-3. **Preview** opens the card. **Copy link** on the card list gives you the link to send.
-
-Photos are shrunk and re-saved in the browser before upload (fast to load, and hidden data such as
-GPS location is removed). Tap a photo in the editor to choose which part stays visible when it's
-cropped. Videos up to 50 MB (under 15 MB loads best on phones). No video → the video frame is
-hidden; no YouTube link → the cinema is hidden.
-
-The card list shows how many times each card was opened and when.
-
-**Privacy:** visitors can only fetch one card by its exact link name. They can't list other cards
-or read who opened what. Uploaded photos/videos are public by link (like any image on a website).
+- Link endings are random, so people can't guess other couples' cards.
+- Clients can only **create** cards. Nobody can edit or delete a card from the website; you can,
+  in Supabase → Table Editor → **cards** (the `data` column holds everything).
+- Photos are shrunk and re-saved in the browser before upload (fast, and hidden data such as GPS
+  location is removed). Tapping a photo sets which part stays visible when cropped.
+- Videos up to 50 MB. No video → the video frame is hidden; no YouTube link → the cinema is hidden.
+- Every opening of a card adds a row to **visits** with its `card_id`.
 
 ## Edit the main-link card
 
@@ -85,7 +77,8 @@ Open `js/config.js`. Names, opening lines, wishes, photo captions, the letter, r
 ## Supabase
 
 URL and publishable key live in `js/supabase.js`. Tables: `cards` (client cards), `visits`
-(a row each time an envelope is opened, per card). Storage bucket: `card-media`.
+(a row each time an envelope is opened, per card). Storage bucket: `card-media` (uploads go in
+`uploads/`). Run `supabase/schema.sql` once in the SQL Editor (safe to re-run).
 See `supabase/schema.sql`.
 
 ## Deploy (GitHub Pages)
