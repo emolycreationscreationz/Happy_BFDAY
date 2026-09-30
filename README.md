@@ -42,7 +42,7 @@ supabase/schema.sql         database + storage setup (run once in Supabase)
 One site, many couples. Clients make their own card, no login:
 
 1. Send them `https://<site>/customize.html`.
-2. They type the names, pick a colour, upload photos (and an optional video), write their
+2. They type the names, pick a colour, upload photos, write their
    messages, paste a YouTube link and tap **Create my card**.
 3. They get their own link, e.g. `https://<site>/?card=raj-priya-7k2f`, with Copy / Open /
    Share on WhatsApp buttons.
