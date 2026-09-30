@@ -52,7 +52,7 @@
   }
 
   /* ---------- Heart burst ---------- */
-  var COLORS = ['#ff5c8d', '#ff8fb1', '#ffd1de', '#f3c77a', '#e91e63', '#fff3d6'];
+  var COLORS = ['#5c98ff', '#8fb8ff', '#d1e2ff', '#f3c77a', '#1e68e9', '#fff3d6'];
   function burst(x, y, n, spread) {
     if (reducedMotion) return;
     var b = el('div', 'burst');
@@ -85,7 +85,7 @@
     svg.setAttribute('preserveAspectRatio', 'none');
     var sags = [[[0, 6], [25, 74], [50, 8]], [[50, 8], [75, 74], [100, 6]]];
     var d = '';
-    var bulbs = [['#fff0b8', 'rgba(255, 200, 100, .45)'], ['#ff9fbd', 'rgba(255, 79, 134, .45)'], ['#ffd88a', 'rgba(233, 194, 122, .45)']];
+    var bulbs = [['#fff0b8', 'rgba(255, 200, 100, .45)'], ['#9fc2ff', 'rgba(79, 144, 255, .45)'], ['#ffd88a', 'rgba(233, 194, 122, .45)']];
     var k = 0;
     sags.forEach(function (q, si) {
       d += (si ? ' ' : 'M' + q[0][0] + ' ' + q[0][1]) + ' Q' + q[1][0] + ' ' + q[1][1] + ' ' + q[2][0] + ' ' + q[2][1];
@@ -226,7 +226,7 @@
     [50, 88, 0], [30, 74, -8], [70, 74, 8], [13, 55, -10], [87, 55, 10],
     [9, 31, -6], [91, 31, 6], [27, 11, -10], [73, 11, 10]
   ];
-  var PH = [['#ffc2d4', '#ff8fb1'], ['#ffd9c2', '#f3a37a'], ['#f7c6e8', '#d98ad0'], ['#ffe3b3', '#f3c77a'], ['#ffc2cf', '#e91e63']];
+  var PH = [['#c2d8ff', '#8fb8ff'], ['#c2d8ff', '#7aa6f3'], ['#c6d8f7', '#8aa7d9'], ['#ffe3b3', '#f3c77a'], ['#c2d8ff', '#1e68e9']];
 
   function photo(src, focus, i, alt) {
     if (src) {
@@ -520,8 +520,8 @@
     var cv = $('#ambient'), cx = cv.getContext('2d');
     if (!cx) return;
     var W, H, dpr, parts = [];
-    var heartCols = ['255,79,134', '255,143,177', '255,209,222', '233,194,122'];
-    var petalCols = [['#ff6f9c', '#a50e3c'], ['#ff9fbd', '#d42a5b'], ['#e0306e', '#6a0a2e'], ['#ffc2d4', '#e0306e']];
+    var heartCols = ['79,144,255', '143,184,255', '209,226,255', '233,194,122'];
+    var petalCols = [['#6fa4ff', '#0e45a5'], ['#9fc2ff', '#2a68d4'], ['#3071e0', '#0a2d6a'], ['#c2d8ff', '#3071e0'], ['#fff2cf', '#c9953f'], ['#f3d48f', '#a87a32']];
     function size() {
       dpr = Math.min(2, window.devicePixelRatio || 1);
       W = innerWidth; H = innerHeight;

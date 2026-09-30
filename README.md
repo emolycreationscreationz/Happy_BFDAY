@@ -2,7 +2,7 @@
 
 A digital surprise card for Boyfriend's Day, built on the same idea as the *Raikan Cinta* invitation:
 an envelope opening, then a scroll-down story of little "gifts".
-Theme: rose velvet · wine · champagne gold, with roses, fairy lights and falling petals. Static site (HTML/CSS/JS), no build step.
+Theme: royal blue · gold · black, with blue and ivory roses, fairy lights and falling petals. Static site (HTML/CSS/JS), no build step.
 
 ## The flow
 
