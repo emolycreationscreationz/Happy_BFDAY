@@ -7,6 +7,7 @@
   var reducedMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var HEART = '<svg viewBox="0 0 32 32"><use href="#i-heart"/></svg>';
   var heroVideo = null;
+  var ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -74,16 +75,40 @@
   }
 
   /* ---------- Opening: envelope ---------- */
-  function stars() {
-    var s = $('.stars');
-    for (var i = 0; i < 60; i++) {
-      var st = el('i');
-      st.style.left = Math.random() * 100 + '%';
-      st.style.top = Math.random() * 100 + '%';
-      st.style.setProperty('--t', (2 + Math.random() * 3) + 's');
-      st.style.setProperty('--d', (Math.random() * 3) + 's');
-      s.appendChild(st);
-    }
+  /* ---------- Fairy lights across the top of the hero ---------- */
+  function fairy() {
+    var box = $('#fairy');
+    if (!box) return;
+    var NS = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 100 90');
+    svg.setAttribute('preserveAspectRatio', 'none');
+    var sags = [[[0, 6], [25, 74], [50, 8]], [[50, 8], [75, 74], [100, 6]]];
+    var d = '';
+    var bulbs = [['#fff0b8', 'rgba(255, 200, 100, .45)'], ['#ff9fbd', 'rgba(255, 79, 134, .45)'], ['#ffd88a', 'rgba(233, 194, 122, .45)']];
+    var k = 0;
+    sags.forEach(function (q, si) {
+      d += (si ? ' ' : 'M' + q[0][0] + ' ' + q[0][1]) + ' Q' + q[1][0] + ' ' + q[1][1] + ' ' + q[2][0] + ' ' + q[2][1];
+      for (var i = 1; i < 10; i++) {
+        var t = i / 10, u = 1 - t;
+        var x = u * u * q[0][0] + 2 * u * t * q[1][0] + t * t * q[2][0];
+        var y = u * u * q[0][1] + 2 * u * t * q[1][1] + t * t * q[2][1];
+        var b = el('i'), c = bulbs[k++ % bulbs.length];
+        b.style.left = x + '%'; b.style.top = y + 'px';
+        b.style.setProperty('--c', c[0]); b.style.setProperty('--g', c[1]);
+        b.style.setProperty('--t', (1.8 + Math.random() * 1.8) + 's');
+        b.style.setProperty('--d', (Math.random() * 2) + 's');
+        box.appendChild(b);
+      }
+    });
+    var path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', d);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', '#7a5c30');
+    path.setAttribute('stroke-width', '1.4');
+    path.setAttribute('vector-effect', 'non-scaling-stroke');
+    svg.appendChild(path);
+    box.insertBefore(svg, box.firstChild);
   }
 
   function typeLines(box, lines, done) {
@@ -108,34 +133,32 @@
   }
 
   function opener() {
-    var env = $('#envelope'), op = $('#opener'), opened = false;
+    var env = $('#opener'), opened = false;
     var speed = reducedMotion ? 0.05 : 1;
     function open() {
       if (opened) return;
       opened = true;
       var r = $('#seal').getBoundingClientRect();
-      burst(r.left + r.width / 2, r.top + r.height / 2, 28, 180);
-      op.classList.add('opened');
+      burst(r.left + r.width / 2, r.top + r.height / 2, 34, 200);
       env.classList.add('open');
       sb('visits', { user_agent: navigator.userAgent.slice(0, 300) }).catch(function () {});
-      setTimeout(function () { env.classList.add('rise'); }, 800 * speed);
+      setTimeout(function () { env.classList.add('rise'); }, 1200 * speed);
       setTimeout(function () {
         env.classList.add('read');
         setTimeout(function () {
           typeLines($('#typed'), C.openingLines || [], function () { $('#openGifts').classList.add('show'); });
         }, 900 * speed);
-      }, 2000 * speed);
+      }, 2800 * speed);
     }
-    $('#seal').addEventListener('click', open);
     env.addEventListener('click', function (e) { if (!e.target.closest('#openGifts')) open(); });
 
     $('#openGifts').addEventListener('click', function (e) {
-      burst(e.clientX, e.clientY, 36, 220);
+      burst(e.clientX, e.clientY, 40, 240);
       window.scrollTo(0, 0);
-      op.classList.add('gone');
+      env.classList.add('gone');
       document.body.classList.remove('locked');
       if (heroVideo) heroVideo.play().catch(function () {});
-      setTimeout(function () { op.remove(); }, 1400);
+      setTimeout(function () { env.remove(); }, 1900);
     });
   }
 
@@ -189,11 +212,9 @@
     }
 
     var list = $('#wishes');
-    (C.wishes || []).forEach(function (w) {
+    (C.wishes || []).forEach(function (w, i) {
       var li = el('li', 'wish');
-      var ic = el('span', 'wish__icon');
-      ic.innerHTML = HEART;
-      li.appendChild(ic);
+      li.appendChild(el('span', 'wish__num', ROMAN[i] || String(i + 1)));
       li.appendChild(el('span', null, w));
       list.appendChild(li);
     });
@@ -474,31 +495,56 @@
     });
   }
 
-  /* ---------- Ambient floating hearts + sparkles ---------- */
+  /* ---------- Finale: little heart fireworks while it's on screen ---------- */
+  function fireworks() {
+    if (reducedMotion || !('IntersectionObserver' in window)) return;
+    var sec = $('#finale'), on = false, timer;
+    function pop() {
+      if (!on) return;
+      var r = sec.getBoundingClientRect();
+      var top = Math.max(r.top, 0), bottom = Math.min(r.bottom, innerHeight);
+      if (bottom - top > 120) {
+        burst(innerWidth * (0.15 + Math.random() * 0.7), top + (bottom - top) * (0.1 + Math.random() * 0.35), 16, 110);
+      }
+      timer = setTimeout(pop, 1600 + Math.random() * 1400);
+    }
+    new IntersectionObserver(function (en) {
+      var was = on;
+      on = en[0].isIntersecting;
+      if (on && !was) { clearTimeout(timer); timer = setTimeout(pop, 600); }
+    }, { threshold: 0.2 }).observe(sec);
+  }
+
+  /* ---------- Ambient: rising hearts, falling rose petals, sparkles ---------- */
   function ambient() {
     var cv = $('#ambient'), cx = cv.getContext('2d');
     if (!cx) return;
     var W, H, dpr, parts = [];
-    var cols = ['255,92,141', '255,143,177', '255,209,222', '243,199,122'];
+    var heartCols = ['255,79,134', '255,143,177', '255,209,222', '233,194,122'];
+    var petalCols = [['#ff6f9c', '#a50e3c'], ['#ff9fbd', '#d42a5b'], ['#e0306e', '#6a0a2e'], ['#ffc2d4', '#e0306e']];
     function size() {
       dpr = Math.min(2, window.devicePixelRatio || 1);
       W = innerWidth; H = innerHeight;
       cv.width = W * dpr; cv.height = H * dpr;
       cx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
-    function make(initial) {
-      var heart = Math.random() < 0.6;
-      return {
-        heart: heart,
-        x: Math.random() * W,
-        y: initial ? Math.random() * H : H + 20,
-        s: heart ? 6 + Math.random() * 14 : 1 + Math.random() * 2,
-        v: 0.15 + Math.random() * 0.45,
-        a: 0.12 + Math.random() * 0.4,
-        w: Math.random() * Math.PI * 2,
-        ws: 0.005 + Math.random() * 0.015,
-        c: cols[(Math.random() * cols.length) | 0]
-      };
+    function make(kind, initial) {
+      var p = { kind: kind, x: Math.random() * W, w: Math.random() * Math.PI * 2, ws: 0.005 + Math.random() * 0.015 };
+      if (kind === 'petal') {
+        p.y = initial ? Math.random() * H : -20;
+        p.s = 7 + Math.random() * 8; p.v = 0.5 + Math.random() * 0.8;
+        p.rot = Math.random() * 6.28; p.rs = (Math.random() - 0.5) * 0.04;
+        p.flip = Math.random() * 6.28; p.fs = 0.02 + Math.random() * 0.03;
+        p.c = petalCols[(Math.random() * petalCols.length) | 0];
+        p.a = 0.55 + Math.random() * 0.35;
+      } else {
+        p.y = initial ? Math.random() * H : H + 20;
+        p.s = kind === 'heart' ? 6 + Math.random() * 13 : 1 + Math.random() * 1.8;
+        p.v = 0.15 + Math.random() * 0.45;
+        p.a = kind === 'heart' ? 0.1 + Math.random() * 0.3 : 0.3 + Math.random() * 0.5;
+        p.c = heartCols[(Math.random() * heartCols.length) | 0];
+      }
+      return p;
     }
     function heart(x, y, s) {
       cx.beginPath();
@@ -509,24 +555,52 @@
       cx.bezierCurveTo(x + s * 0.5, y - s * 0.5, x, y - s * 0.5, x, y - s * 0.15);
       cx.fill();
     }
+    function petal(p, x) {
+      var s = p.s;
+      cx.save();
+      cx.translate(x, p.y);
+      cx.rotate(p.rot);
+      cx.scale(0.35 + 0.65 * Math.abs(Math.cos(p.flip)), 1);
+      var g = cx.createLinearGradient(0, -s, 0, s);
+      g.addColorStop(0, p.c[0]); g.addColorStop(1, p.c[1]);
+      cx.globalAlpha = p.a;
+      cx.fillStyle = g;
+      cx.beginPath();
+      cx.moveTo(0, s);
+      cx.bezierCurveTo(-s * 0.9, s * 0.4, -s * 0.8, -s * 0.7, -s * 0.15, -s);
+      cx.quadraticCurveTo(0, -s * 0.75, s * 0.15, -s);
+      cx.bezierCurveTo(s * 0.8, -s * 0.7, s * 0.9, s * 0.4, 0, s);
+      cx.fill();
+      cx.restore();
+      cx.globalAlpha = 1;
+    }
     function draw() {
       cx.clearRect(0, 0, W, H);
       parts.forEach(function (p, i) {
-        p.y -= p.v; p.w += p.ws;
-        var x = p.x + Math.sin(p.w) * 18;
-        if (p.y < -30) parts[i] = make(false);
-        if (p.heart) {
+        p.w += p.ws;
+        var x = p.x + Math.sin(p.w) * (p.kind === 'petal' ? 30 : 18);
+        if (p.kind === 'petal') {
+          p.y += p.v; p.rot += p.rs; p.flip += p.fs;
+          if (p.y > H + 30) parts[i] = make('petal', false);
+          petal(p, x);
+          return;
+        }
+        p.y -= p.v;
+        if (p.y < -30) parts[i] = make(p.kind, false);
+        if (p.kind === 'heart') {
           cx.fillStyle = 'rgba(' + p.c + ',' + p.a + ')';
           heart(x, p.y, p.s);
         } else {
-          cx.fillStyle = 'rgba(' + p.c + ',' + (p.a * (0.6 + 0.4 * Math.sin(p.w * 4))) + ')';
+          cx.fillStyle = 'rgba(' + p.c + ',' + (p.a * (0.5 + 0.5 * Math.sin(p.w * 5))) + ')';
           cx.beginPath(); cx.arc(x, p.y, p.s, 0, Math.PI * 2); cx.fill();
         }
       });
     }
     size();
-    var n = W < 600 ? 26 : 42;
-    for (var i = 0; i < n; i++) parts.push(make(true));
+    var small = W < 600, i;
+    for (i = 0; i < (small ? 14 : 22); i++) parts.push(make('heart', true));
+    for (i = 0; i < (small ? 12 : 20); i++) parts.push(make('petal', true));
+    for (i = 0; i < (small ? 14 : 24); i++) parts.push(make('spark', true));
     addEventListener('resize', size);
     if (reducedMotion) { draw(); return; }
     (function loop() {
@@ -536,7 +610,8 @@
   }
 
   fill();
-  stars();
+  fairy();
+  fireworks();
   hero();
   memories();
   letter();

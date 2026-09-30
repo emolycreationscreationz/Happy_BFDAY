@@ -5,131 +5,309 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Happy Boyfriend's Day</title>
 <meta name="description" content="A little surprise, made just for you.">
-<meta name="theme-color" content="#1a0913">
+<meta name="theme-color" content="#3a0619">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Happy Boyfriend's Day ♥">
 <meta property="og:description" content="A little surprise, made just for you. Open it.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 29S3 20.5 3 11.5A6.5 6.5 0 0 1 16 8a6.5 6.5 0 0 1 13 3.5C29 20.5 16 29 16 29Z' fill='%23ff5c8d'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 29S3 20.5 3 11.5A6.5 6.5 0 0 1 16 8a6.5 6.5 0 0 1 13 3.5C29 20.5 16 29 16 29Z' fill='%23e91e63'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Outfit:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Outfit:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body class="locked">
 
-<!-- ============ SVG sprite ============ -->
+<!-- ============ SVG sprite: roses, bouquets, ornaments, icons ============ -->
 <svg class="sprite" aria-hidden="true" focusable="false">
   <defs>
     <linearGradient id="gRose" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#ffb3c8"/>
-      <stop offset=".5" stop-color="#ff5c8d"/>
-      <stop offset="1" stop-color="#c2185b"/>
+      <stop offset=".5" stop-color="#ff4f86"/>
+      <stop offset="1" stop-color="#b3124f"/>
     </linearGradient>
     <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#fff0c9"/>
-      <stop offset=".5" stop-color="#f3c77a"/>
-      <stop offset="1" stop-color="#b8863b"/>
+      <stop offset="0" stop-color="#fff2cf"/>
+      <stop offset=".45" stop-color="#e9c27a"/>
+      <stop offset="1" stop-color="#a87a32"/>
     </linearGradient>
-    <radialGradient id="gWax" cx=".38" cy=".32" r=".75">
-      <stop offset="0" stop-color="#ff7aa2"/>
-      <stop offset=".55" stop-color="#d81b60"/>
-      <stop offset="1" stop-color="#7a0c35"/>
+    <radialGradient id="gWax" cx=".36" cy=".3" r=".8">
+      <stop offset="0" stop-color="#e2466f"/>
+      <stop offset=".5" stop-color="#a50e3c"/>
+      <stop offset="1" stop-color="#5a0620"/>
     </radialGradient>
-    <clipPath id="clipHeart" clipPathUnits="objectBoundingBox">
-      <path d="M.5 .96C.5 .96 .03 .66 .03 .32A.24 .24 0 0 1 .5 .2A.24 .24 0 0 1 .97 .32C.97 .66 .5 .96 .5 .96Z"/>
-    </clipPath>
+    <!-- rose colours (userSpace so they follow each petal layer) -->
+    <radialGradient id="gRed" cx="0" cy="0" r="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3d0214"/>
+      <stop offset=".35" stop-color="#8c0c33"/>
+      <stop offset=".72" stop-color="#d42a5b"/>
+      <stop offset="1" stop-color="#ff7ba0"/>
+    </radialGradient>
+    <radialGradient id="gPink" cx="0" cy="0" r="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7d1238"/>
+      <stop offset=".35" stop-color="#d9477a"/>
+      <stop offset=".72" stop-color="#ff9dbc"/>
+      <stop offset="1" stop-color="#ffe1ea"/>
+    </radialGradient>
+    <radialGradient id="gBlush" cx="0" cy="0" r="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a6405f"/>
+      <stop offset=".35" stop-color="#eea0b6"/>
+      <stop offset=".72" stop-color="#ffd8e3"/>
+      <stop offset="1" stop-color="#fff6f8"/>
+    </radialGradient>
+    <linearGradient id="gLeaf" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#16301a"/>
+      <stop offset=".55" stop-color="#2f5a2c"/>
+      <stop offset="1" stop-color="#7fa152"/>
+    </linearGradient>
+    <radialGradient id="gShadow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#000" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
     <clipPath id="clipProgress"><rect id="progressRect" x="0" y="32" width="32" height="32"/></clipPath>
+
+    <!-- Rose -->
+    <g id="petal">
+      <path d="M0 -2C-11 -3 -17 -13 -11 -20C-6 -25 6 -25 11 -20C17 -13 11 -3 0 -2Z" stroke="#4a0418" stroke-width=".45" stroke-opacity=".55"/>
+      <path d="M-8 -20.5C-3 -23.5 3 -23.5 8 -20.5" fill="none" stroke="#fff" stroke-width=".8" opacity=".45"/>
+    </g>
+    <g id="petalRing">
+      <use href="#petal"/><use href="#petal" transform="rotate(72)"/><use href="#petal" transform="rotate(144)"/>
+      <use href="#petal" transform="rotate(216)"/><use href="#petal" transform="rotate(288)"/>
+    </g>
+    <g id="rose">
+      <circle cx="2" cy="4" r="26" fill="url(#gShadow)"/>
+      <use href="#petalRing"/>
+      <use href="#petalRing" transform="translate(0 1.4) rotate(36) scale(.76)" fill="#2a0010" opacity=".3"/>
+      <use href="#petalRing" transform="rotate(36) scale(.74)"/>
+      <use href="#petalRing" transform="rotate(10) scale(.5)"/>
+      <use href="#petalRing" transform="rotate(50) scale(.3)"/>
+      <path d="M-1 0C-1 -3 3 -3 3 0C3 4 -3 5 -4 1C-5 -4 1 -7 5 -4" fill="none" stroke="#2a0010" stroke-width=".9" stroke-linecap="round" opacity=".7"/>
+    </g>
+    <g id="bud">
+      <path d="M0 0C-6 -5 -5 -15 0 -19C5 -15 6 -5 0 0Z" fill="#b3124f"/>
+      <path d="M0 0C-3 -6 -2 -13 1 -17C4 -12 3 -5 0 0Z" fill="#ff6b98" opacity=".7"/>
+      <path d="M0 1L-5 -6M0 1L5 -6M0 1V6" fill="none" stroke="#2f5a2c" stroke-width="1.3" stroke-linecap="round"/>
+    </g>
+    <g id="leaf">
+      <path d="M0 0C8 -9 24 -10 36 0C24 8 8 8 0 0Z" fill="url(#gLeaf)"/>
+      <path d="M1 0H33M9 0L14 -4M17 0L22 -4M25 0L29 -3M9 0L14 4M17 0L22 4M25 0L29 3" fill="none" stroke="#0e1f10" stroke-width=".5" opacity=".6"/>
+      <path d="M3 -1C12 -7 24 -7 33 -1" fill="none" stroke="#c9e09a" stroke-width=".5" opacity=".35"/>
+    </g>
+    <g id="breath" fill="#fff6f8">
+      <circle r="1.6"/><circle cx="4" cy="-3" r="1.3"/><circle cx="-3.5" cy="-3.5" r="1.2"/><circle cx="1" cy="-6.5" r="1.1"/><circle cx="5.5" cy="1.5" r="1"/>
+    </g>
+
+    <!-- Posy (sits on the envelope flap tip) -->
+    <symbol id="posy" viewBox="-140 -70 280 140" overflow="visible">
+      <g fill="none" stroke="url(#gGold)" stroke-linecap="round" stroke-width="1.3">
+        <path d="M-40 10C-80 20 -110 10 -130 -8C-138 -16 -132 -24 -124 -20"/>
+        <path d="M40 10C80 20 110 10 130 -8C138 -16 132 -24 124 -20"/>
+      </g>
+      <use href="#leaf" transform="translate(-24 8) rotate(165) scale(1.7)"/>
+      <use href="#leaf" transform="translate(24 8) rotate(15) scale(1.7)"/>
+      <use href="#leaf" transform="translate(-18 18) rotate(140) scale(1.3)"/>
+      <use href="#leaf" transform="translate(18 18) rotate(40) scale(1.3)"/>
+      <use href="#leaf" transform="translate(-12 -14) rotate(-150) scale(1.2)"/>
+      <use href="#leaf" transform="translate(12 -14) rotate(-30) scale(1.2)"/>
+      <use href="#bud" transform="translate(-112 -2) rotate(-75) scale(1.1)"/>
+      <use href="#bud" transform="translate(112 -2) rotate(75) scale(1.1)"/>
+      <use href="#rose" fill="url(#gBlush)" transform="translate(-86 -2) rotate(20) scale(1)"/>
+      <use href="#rose" fill="url(#gBlush)" transform="translate(86 -2) rotate(-10) scale(1)"/>
+      <use href="#rose" fill="url(#gPink)" transform="translate(-54 8) rotate(40) scale(1.25)"/>
+      <use href="#rose" fill="url(#gPink)" transform="translate(54 8) rotate(-30) scale(1.25)"/>
+      <use href="#rose" fill="url(#gRed)" transform="translate(-26 24) rotate(10) scale(.95)"/>
+      <use href="#rose" fill="url(#gRed)" transform="translate(26 24) rotate(-40) scale(.95)"/>
+      <use href="#breath" transform="translate(-70 -24) scale(1.2)"/><use href="#breath" transform="translate(70 -24) scale(1.2)"/>
+      <use href="#breath" transform="translate(-104 16)"/><use href="#breath" transform="translate(104 16)"/>
+      <use href="#breath" transform="translate(-40 -20)"/><use href="#breath" transform="translate(40 -20)"/>
+    </symbol>
+
+    <!-- Corner rose spray -->
+    <symbol id="roseCorner" viewBox="0 0 260 220" overflow="visible">
+      <g fill="none" stroke="url(#gGold)" stroke-linecap="round">
+        <path d="M-6 6C60 10 120 20 200 30C226 33 240 44 236 58C232 70 216 70 214 58C213 50 222 46 226 52" stroke-width="1.5"/>
+        <path d="M6 -6C12 50 20 110 26 170C28 192 20 206 8 204C-2 202 0 190 8 190" stroke-width="1.4"/>
+        <path d="M90 60C120 90 150 104 186 106" stroke-width="1"/>
+      </g>
+      <use href="#leaf" transform="translate(150 30) rotate(-8)"/>
+      <use href="#leaf" transform="translate(170 36) rotate(30) scale(.9)"/>
+      <use href="#leaf" transform="translate(24 120) rotate(95)"/>
+      <use href="#leaf" transform="translate(30 140) rotate(60) scale(.85)"/>
+      <use href="#leaf" transform="translate(110 92) rotate(40) scale(.9)"/>
+      <use href="#leaf" transform="translate(84 20) rotate(-30) scale(.8)"/>
+      <use href="#leaf" transform="translate(20 70) rotate(120) scale(.8)"/>
+      <use href="#leaf" transform="translate(140 100) rotate(10) scale(.8)"/>
+      <use href="#leaf" transform="translate(60 110) rotate(80) scale(.8)"/>
+      <use href="#rose" fill="url(#gBlush)" transform="translate(80 38) rotate(40) scale(1.05)"/>
+      <use href="#rose" fill="url(#gPink)" transform="translate(146 46) rotate(-10) scale(.85)"/>
+      <use href="#rose" fill="url(#gBlush)" transform="translate(28 104) rotate(15) scale(.9)"/>
+      <use href="#rose" fill="url(#gRed)" transform="translate(36 40) rotate(10) scale(1.55)"/>
+      <use href="#rose" fill="url(#gPink)" transform="translate(104 72) rotate(-20) scale(1.2)"/>
+      <use href="#rose" fill="url(#gRed)" transform="translate(186 52) rotate(30) scale(.8)"/>
+      <use href="#rose" fill="url(#gRed)" transform="translate(60 90) rotate(50) scale(.95)"/>
+      <use href="#rose" fill="url(#gPink)" transform="translate(24 160) rotate(70) scale(.75)"/>
+      <use href="#breath" transform="translate(206 70) scale(1.3)"/>
+      <use href="#breath" transform="translate(218 86)"/>
+      <use href="#breath" transform="translate(46 186) scale(1.2)"/>
+      <use href="#breath" transform="translate(160 108) scale(1.2)"/>
+      <use href="#breath" transform="translate(120 14)"/>
+      <use href="#breath" transform="translate(60 136)"/>
+      <use href="#bud" transform="translate(236 40) rotate(80) scale(1.2)"/>
+      <use href="#bud" transform="translate(14 200) rotate(200) scale(1.1)"/>
+      <use href="#bud" transform="translate(192 106) rotate(110)"/>
+    </symbol>
+
+    <!-- Gold flourish divider -->
+    <symbol id="flourish" viewBox="0 0 240 30" overflow="visible">
+      <g fill="none" stroke="url(#gGold)" stroke-linecap="round">
+        <path d="M104 15C88 15 80 6 68 6C58 6 54 14 60 18C65 21 70 16 66 12" stroke-width="1.3"/>
+        <path d="M68 16C50 24 30 16 4 15" stroke-width="1"/>
+        <path d="M136 15C152 15 160 6 172 6C182 6 186 14 180 18C175 21 170 16 174 12" stroke-width="1.3"/>
+        <path d="M172 16C190 24 210 16 236 15" stroke-width="1"/>
+      </g>
+      <path d="M120 24S109 17 109 11A5 5 0 0 1 120 8.5A5 5 0 0 1 131 11C131 17 120 24 120 24Z" fill="url(#gRose)"/>
+      <circle cx="96" cy="15" r="1.6" fill="#e9c27a"/><circle cx="144" cy="15" r="1.6" fill="#e9c27a"/>
+    </symbol>
+
+    <symbol id="i-heart" viewBox="0 0 32 32"><path d="M16 29S3 20.5 3 11.5A6.5 6.5 0 0 1 16 8a6.5 6.5 0 0 1 13 3.5C29 20.5 16 29 16 29Z"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M3 9h18v4H3zM5 13v8h14v-8M12 9v12M12 9S10.5 4 8 4a2.5 2.5 0 0 0 0 5M12 9s1.5-5 4-5a2.5 2.5 0 0 1 0 5"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M4 9v6h4l5 4V5L8 9zM16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M4 9v6h4l5 4V5L8 9zM17 9l5 6M22 9l-5 6"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.7l-10-6.5A1 1 0 0 0 8 5.5Z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M21 3L10 14M21 3l-7 18-4-7-7-4z"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 8h3l2-3h6l2 3h3v11H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></symbol>
+    <symbol id="i-film" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4zM8 4v16M16 4v16M4 8h4M4 12h4M4 16h4M16 8h4M16 12h4M16 16h4"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L19 8a2.1 2.1 0 0 0-3-3L5 16zM14 7l3 3"/></symbol>
+
+    <!-- Wax seal -->
+    <symbol id="waxSeal" viewBox="0 0 100 100">
+      <path d="M50 3C60 2 64 9 72 10S89 11 92 20 90 36 95 44 98 60 91 67 87 83 77 88 64 91 56 97 40 99 31 93 17 89 9 78 7 66 2 58 1 44 7 34 8 19 20 12 38 4 50 3Z" fill="url(#gWax)"/>
+      <circle cx="50" cy="51" r="34" fill="none" stroke="#3d0214" stroke-opacity=".45" stroke-width="2.5"/>
+      <circle cx="50" cy="51" r="31" fill="none" stroke="#ff9fbc" stroke-opacity=".35" stroke-width="1"/>
+      <g transform="translate(50 52)">
+        <path d="M0 18S-19 6 -19 -5A9.5 9.5 0 0 1 0 -10A9.5 9.5 0 0 1 19 -5C19 6 0 18 0 18Z" fill="#6e0726" transform="translate(.8 1.2)"/>
+        <path d="M0 18S-19 6 -19 -5A9.5 9.5 0 0 1 0 -10A9.5 9.5 0 0 1 19 -5C19 6 0 18 0 18Z" fill="#d8416e"/>
+        <path d="M-13 -7A6 6 0 0 1 -4 -9" fill="none" stroke="#ffc2d4" stroke-width="1.6" stroke-linecap="round" opacity=".8"/>
+      </g>
+      <ellipse cx="34" cy="26" rx="14" ry="6" fill="#fff" opacity=".13" transform="rotate(-30 34 26)"/>
+    </symbol>
   </defs>
-  <symbol id="i-heart" viewBox="0 0 32 32"><path d="M16 29S3 20.5 3 11.5A6.5 6.5 0 0 1 16 8a6.5 6.5 0 0 1 13 3.5C29 20.5 16 29 16 29Z"/></symbol>
-  <symbol id="i-gift" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M3 9h18v4H3zM5 13v8h14v-8M12 9v12M12 9S10.5 4 8 4a2.5 2.5 0 0 0 0 5M12 9s1.5-5 4-5a2.5 2.5 0 0 1 0 5"/></symbol>
-  <symbol id="i-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></symbol>
-  <symbol id="i-sound" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M4 9v6h4l5 4V5L8 9zM16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></symbol>
-  <symbol id="i-mute" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M4 9v6h4l5 4V5L8 9zM17 9l5 6M22 9l-5 6"/></symbol>
-  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.7l-10-6.5A1 1 0 0 0 8 5.5Z"/></symbol>
-  <symbol id="i-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></symbol>
-  <symbol id="i-send" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M21 3L10 14M21 3l-7 18-4-7-7-4z"/></symbol>
-  <symbol id="i-camera" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 8h3l2-3h6l2 3h3v11H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></symbol>
-  <symbol id="i-film" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4zM8 4v16M16 4v16M4 8h4M4 12h4M4 16h4M16 8h4M16 12h4M16 16h4"/></symbol>
 </svg>
 
-<!-- Floating hearts on the whole page -->
+<!-- Floating hearts, rose petals & sparkles -->
 <canvas id="ambient" aria-hidden="true"></canvas>
 
-<!-- ============ OPENING: envelope ============ -->
-<div id="opener" class="opener">
-  <div class="opener__glow" aria-hidden="true"></div>
-  <div class="stars" aria-hidden="true"></div>
+<!-- ============ OPENING: full-page envelope ============ -->
+<div id="opener" class="env">
+  <div class="env__back"></div>
+  <div class="env__liner"></div>
 
-  <p class="opener__date" data-f="date"></p>
-
-  <div class="envelope" id="envelope">
-    <div class="envelope__back"></div>
-    <div class="envelope__letter" id="envelopeLetter">
-      <p class="envelope__letter-title" data-f="pageTitle"></p>
-      <div class="envelope__typed" id="typed" aria-live="polite"></div>
-      <button class="btn btn--glow envelope__go" id="openGifts" type="button">
-        <svg><use href="#i-gift"/></svg><span data-f="openButton"></span>
-      </button>
-    </div>
-    <div class="envelope__front">
-      <p class="envelope__to" data-f="envelopeTo"></p>
-      <p class="envelope__from" data-f="envelopeFrom"></p>
-    </div>
-    <div class="envelope__flap"></div>
-    <button class="seal" id="seal" type="button" aria-label="Open the envelope">
-      <span class="seal__ring"></span>
-      <svg class="seal__wax" viewBox="0 0 100 100" aria-hidden="true">
-        <path d="M50 4C60 3 64 10 72 11S88 12 91 21 89 36 94 44 97 60 90 67 86 82 77 87 64 90 56 96 40 98 32 92 18 88 10 78 8 66 3 58 2 44 8 34 9 20 20 13 38 5 50 4Z" fill="url(#gWax)"/>
-        <circle cx="50" cy="51" r="33" fill="none" stroke="#ffc2d4" stroke-opacity=".4" stroke-width="1.5"/>
-        <use href="#i-heart" x="30" y="31" width="40" height="40" fill="#ffd6e2" fill-opacity=".9"/>
-      </svg>
+  <article class="env__card" id="envCard">
+    <svg class="env__card-rose env__card-rose--tl" viewBox="0 0 260 220" aria-hidden="true"><use href="#roseCorner"/></svg>
+    <svg class="env__card-rose env__card-rose--br" viewBox="0 0 260 220" aria-hidden="true"><g transform="translate(260 220) scale(-1 -1)"><use href="#roseCorner" width="260" height="220"/></g></svg>
+    <p class="env__card-greeting" data-f="cardGreeting"></p>
+    <h2 class="env__card-title" data-f="pageTitle"></h2>
+    <svg class="flourish" viewBox="0 0 240 30" aria-hidden="true"><use href="#flourish"/></svg>
+    <div class="env__typed" id="typed" aria-live="polite"></div>
+    <button class="btn btn--glow env__go" id="openGifts" type="button">
+      <svg><use href="#i-gift"/></svg><span data-f="openButton"></span>
     </button>
+  </article>
+
+  <div class="env__pocket">
+    <svg class="env__folds" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 100L50 58L100 100" fill="none" stroke="#1c0209" stroke-opacity=".55" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+      <path d="M0 99.5L50 58.6L100 99.5" fill="none" stroke="#e9c27a" stroke-opacity=".45" stroke-width="1" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <div class="env__frame" aria-hidden="true"></div>
+    <svg class="env__roses env__roses--bl" viewBox="0 0 260 220" aria-hidden="true"><g transform="translate(0 220) scale(1 -1)"><use href="#roseCorner" width="260" height="220"/></g></svg>
+    <svg class="env__roses env__roses--br" viewBox="0 0 260 220" aria-hidden="true"><g transform="translate(260 220) scale(-1 -1)"><use href="#roseCorner" width="260" height="220"/></g></svg>
+    <div class="env__address">
+      <p class="env__to" data-f="envelopeTo"></p>
+      <p class="env__name" data-f="hisName"></p>
+      <p class="env__from" data-f="envelopeFrom"></p>
+      <p class="env__hint"><svg><use href="#i-heart"/></svg><span data-f="envelopeHint"></span></p>
+    </div>
   </div>
 
-  <p class="opener__hint"><span data-f="envelopeHint"></span></p>
+  <div class="env__flap" id="flap">
+    <div class="env__flap-face"></div>
+    <svg class="env__flap-edge" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 0L50 100L100 0" fill="none" stroke="#f3d48f" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+      <path d="M4 0L50 92L96 0" fill="none" stroke="#e9c27a" stroke-opacity=".5" stroke-width="1" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <svg class="env__corner env__corner--tl" viewBox="0 0 260 220" aria-hidden="true"><use href="#roseCorner"/></svg>
+    <svg class="env__corner env__corner--tr" viewBox="0 0 260 220" aria-hidden="true"><g transform="translate(260 0) scale(-1 1)"><use href="#roseCorner" width="260" height="220"/></g></svg>
+    <div class="env__flap-text">
+      <p class="env__flap-kicker">Happy</p>
+      <p class="env__flap-title">Boyfriend's Day</p>
+      <p class="env__flap-date" data-f="date"></p>
+    </div>
+    <svg class="env__posy" viewBox="-140 -70 280 140" aria-hidden="true"><use href="#posy" x="-140" y="-70" width="280" height="140"/></svg>
+  </div>
+
+  <button class="seal" id="seal" type="button" aria-label="Open the envelope">
+    <span class="seal__ring"></span><span class="seal__ring seal__ring--2"></span>
+    <span class="seal__half seal__half--l"><svg viewBox="0 0 100 100"><use href="#waxSeal"/></svg></span>
+    <span class="seal__half seal__half--r"><svg viewBox="0 0 100 100"><use href="#waxSeal"/></svg></span>
+  </button>
+
+  <div class="env__dim" aria-hidden="true"></div>
 </div>
 
 <main id="main">
 
   <!-- ============ HERO + WISHES ============ -->
   <section class="hero" id="hero">
-    <div class="hero__rays" aria-hidden="true"></div>
+    <div class="fairy" id="fairy" aria-hidden="true"></div>
+    <svg class="corner-rose corner-rose--tl" viewBox="0 0 260 220" aria-hidden="true"><use href="#roseCorner"/></svg>
+    <svg class="corner-rose corner-rose--tr" viewBox="0 0 260 220" aria-hidden="true"><g transform="translate(260 0) scale(-1 1)"><use href="#roseCorner" width="260" height="220"/></g></svg>
+    <div class="hero__halo" aria-hidden="true"></div>
+
     <p class="kicker reveal" data-f="heroKicker"></p>
-    <h1 class="hero__title reveal">
-      <span class="script" data-f="heroTitle"></span>
-      <span class="hero__name shine" data-f="hisName"></span>
+    <h1 class="hero__title">
+      <span class="hero__happy reveal">Happy</span>
+      <span class="hero__day reveal" style="--rd:.15s">Boyfriend's Day</span>
+      <span class="hero__name gold-script reveal" style="--rd:.3s" data-f="hisName"></span>
     </h1>
-    <p class="hero__date reveal"><span class="line"></span><span data-f="date"></span><span class="line"></span></p>
+    <svg class="flourish reveal" style="--rd:.45s" viewBox="0 0 240 30" aria-hidden="true"><use href="#flourish"/></svg>
+    <p class="hero__date reveal" style="--rd:.55s" data-f="date"></p>
 
     <div class="video-frame reveal" id="videoFrame">
       <div class="video-frame__inner" id="videoBox"></div>
       <button class="video-frame__sound" id="videoSound" type="button" aria-label="Turn sound on" hidden>
         <svg><use href="#i-mute"/></svg>
       </button>
+      <svg class="video-frame__posy" viewBox="-140 -70 280 140" aria-hidden="true"><use href="#posy" x="-140" y="-70" width="280" height="140"/></svg>
       <span class="video-frame__heart video-frame__heart--a" aria-hidden="true"><svg><use href="#i-heart"/></svg></span>
       <span class="video-frame__heart video-frame__heart--b" aria-hidden="true"><svg><use href="#i-heart"/></svg></span>
     </div>
 
-    <h2 class="section-title reveal"><span class="script" data-f="wishesTitle"></span></h2>
+    <h2 class="section-title reveal"><span class="gold-script" data-f="wishesTitle"></span></h2>
+    <svg class="flourish reveal" viewBox="0 0 240 30" aria-hidden="true"><use href="#flourish"/></svg>
     <ol class="wishes" id="wishes"></ol>
   </section>
 
   <!-- ============ NUDGE ============ -->
   <section class="nudge" id="nudge">
     <div class="giftbox reveal" aria-hidden="true">
+      <div class="giftbox__glow"></div>
       <div class="giftbox__lid"><span class="giftbox__bow"></span></div>
       <div class="giftbox__body"></div>
-      <span class="giftbox__spark s1"></span><span class="giftbox__spark s2"></span><span class="giftbox__spark s3"></span>
+      <span class="giftbox__spark s1"></span><span class="giftbox__spark s2"></span><span class="giftbox__spark s3"></span><span class="giftbox__spark s4"></span>
     </div>
-    <h2 class="nudge__title reveal script" data-f="scrollNudgeTitle"></h2>
+    <h2 class="nudge__title reveal gold-script" data-f="scrollNudgeTitle"></h2>
     <p class="nudge__text reveal" data-f="scrollNudge"></p>
-    <div class="scroll-cue" aria-hidden="true"><svg><use href="#i-down"/></svg><svg><use href="#i-down"/></svg></div>
+    <div class="scroll-cue" aria-hidden="true"><svg><use href="#i-down"/></svg><svg><use href="#i-down"/></svg><svg><use href="#i-down"/></svg></div>
   </section>
 
   <!-- ============ GIFT 1: MEMORIES ============ -->
   <section class="memories" id="memories">
     <p class="gift-label reveal"><svg><use href="#i-camera"/></svg><span data-f="memoriesLabel"></span></p>
-    <h2 class="section-title reveal"><span class="script" data-f="memoriesTitle"></span></h2>
+    <h2 class="section-title reveal"><span class="gold-script" data-f="memoriesTitle"></span></h2>
+    <svg class="flourish reveal" viewBox="0 0 240 30" aria-hidden="true"><use href="#flourish"/></svg>
     <p class="section-sub reveal" data-f="memoriesSub"></p>
 
     <div class="heart-collage" id="collage">
@@ -143,20 +321,18 @@
 
   <!-- ============ GIFT 2: LETTER ============ -->
   <section class="letter-section" id="letter">
-    <p class="gift-label reveal"><svg><use href="#i-heart"/></svg><span data-f="letterLabel"></span></p>
-    <h2 class="section-title reveal"><span class="script" data-f="letterTitle"></span></h2>
+    <p class="gift-label reveal"><svg><use href="#i-pen"/></svg><span data-f="letterLabel"></span></p>
+    <h2 class="section-title reveal"><span class="gold-script" data-f="letterTitle"></span></h2>
+    <svg class="flourish reveal" viewBox="0 0 240 30" aria-hidden="true"><use href="#flourish"/></svg>
 
     <article class="paper reveal">
-      <span class="paper__tape paper__tape--l" aria-hidden="true"></span>
-      <span class="paper__tape paper__tape--r" aria-hidden="true"></span>
+      <span class="paper__tape" aria-hidden="true"></span>
+      <svg class="paper__rose" viewBox="0 0 260 220" aria-hidden="true"><g transform="translate(260 0) scale(-1 1)"><use href="#roseCorner" width="260" height="220"/></g></svg>
       <p class="paper__greeting" data-f="letterGreeting"></p>
       <div class="paper__body" id="letterBody"></div>
       <p class="paper__closing" data-f="letterClosing"></p>
       <p class="paper__sign" data-f="herName"></p>
-      <svg class="paper__seal" viewBox="0 0 100 100" aria-hidden="true">
-        <path d="M50 4C60 3 64 10 72 11S88 12 91 21 89 36 94 44 97 60 90 67 86 82 77 87 64 90 56 96 40 98 32 92 18 88 10 78 8 66 3 58 2 44 8 34 9 20 20 13 38 5 50 4Z" fill="url(#gWax)"/>
-        <use href="#i-heart" x="30" y="31" width="40" height="40" fill="#ffd6e2" fill-opacity=".85"/>
-      </svg>
+      <svg class="paper__seal" viewBox="0 0 100 100" aria-hidden="true"><use href="#waxSeal"/></svg>
     </article>
     <p class="nudge-mini reveal">One more gift… <svg><use href="#i-down"/></svg></p>
   </section>
@@ -164,8 +340,14 @@
   <!-- ============ GIFT 3: CINEMA ============ -->
   <section class="cinema" id="cinema">
     <p class="gift-label reveal"><svg><use href="#i-film"/></svg><span data-f="cinemaLabel"></span></p>
-    <h2 class="section-title reveal"><span class="script" data-f="cinemaTitle"></span></h2>
+    <h2 class="section-title reveal"><span class="gold-script" data-f="cinemaTitle"></span></h2>
+    <svg class="flourish reveal" viewBox="0 0 240 30" aria-hidden="true"><use href="#flourish"/></svg>
     <p class="section-sub reveal" data-f="cinemaSub"></p>
+
+    <div class="ticket reveal" aria-hidden="true">
+      <span class="ticket__main"><small>Private screening</small><b data-f="ticket"></b></span>
+      <span class="ticket__stub"><svg><use href="#i-heart"/></svg><small>Row ♥</small></span>
+    </div>
 
     <div class="theater reveal" id="theater">
       <div class="marquee">
@@ -178,11 +360,11 @@
         <div class="screen" id="screen">
           <div class="screen__idle" id="screenIdle">
             <svg><use href="#i-heart"/></svg>
-            <p id="screenIdleText">Our song is loading…</p>
+            <p id="screenIdleText">Press play, my love</p>
           </div>
         </div>
-        <div class="curtain curtain--l" aria-hidden="true"></div>
-        <div class="curtain curtain--r" aria-hidden="true"></div>
+        <div class="curtain curtain--l" aria-hidden="true"><span class="curtain__tie"></span></div>
+        <div class="curtain curtain--r" aria-hidden="true"><span class="curtain__tie"></span></div>
         <div class="projector-beam" aria-hidden="true"></div>
       </div>
       <div class="seats" aria-hidden="true">
@@ -197,18 +379,21 @@
 
   <!-- ============ FINALE: I APPRECIATE YOU ============ -->
   <section class="finale" id="finale">
+    <svg class="corner-rose corner-rose--tl" viewBox="0 0 260 220" aria-hidden="true"><use href="#roseCorner"/></svg>
+    <svg class="corner-rose corner-rose--tr" viewBox="0 0 260 220" aria-hidden="true"><g transform="translate(260 0) scale(-1 1)"><use href="#roseCorner" width="260" height="220"/></g></svg>
     <p class="kicker reveal" data-f="appreciateKicker"></p>
     <div class="big-heart reveal" aria-hidden="true">
       <svg><use href="#i-heart"/></svg>
       <span class="big-heart__ring"></span><span class="big-heart__ring big-heart__ring--2"></span>
     </div>
-    <h2 class="finale__title shine reveal" data-f="appreciateTitle"></h2>
+    <h2 class="finale__title gold-script reveal" data-f="appreciateTitle"></h2>
+    <svg class="flourish reveal" viewBox="0 0 240 30" aria-hidden="true"><use href="#flourish"/></svg>
     <p class="section-sub reveal" data-f="appreciateSub"></p>
 
     <div class="reasons" id="reasons"></div>
 
     <div class="love-box reveal">
-      <button class="love-btn" id="loveBtn" type="button">
+      <button class="love-btn" id="loveBtn" type="button" aria-label="Send a kiss">
         <svg><use href="#i-heart"/></svg>
       </button>
       <p class="love-box__label" data-f="loveButton"></p>
@@ -216,9 +401,10 @@
     </div>
 
     <form class="reply reveal" id="replyForm" autocomplete="off">
-      <h3 class="reply__title script" data-f="replyTitle"></h3>
-      <input class="reply__name" id="replyName" maxlength="60" required>
-      <textarea class="reply__msg" id="replyMsg" rows="4" maxlength="1500" required></textarea>
+      <svg class="reply__rose" viewBox="0 0 260 220" aria-hidden="true"><use href="#roseCorner"/></svg>
+      <h3 class="reply__title gold-script" data-f="replyTitle"></h3>
+      <input class="reply__name" id="replyName" maxlength="60" required aria-label="Your name">
+      <textarea class="reply__msg" id="replyMsg" rows="4" maxlength="1500" required aria-label="Your message"></textarea>
       <button class="btn btn--glow" type="submit" id="replySend">
         <svg><use href="#i-send"/></svg><span data-f="replyButton"></span>
       </button>
@@ -226,7 +412,8 @@
     </form>
 
     <footer class="footer">
-      <p class="footer__line script" data-f="closingLine"></p>
+      <svg class="footer__posy" viewBox="-140 -70 280 140" aria-hidden="true"><use href="#posy" x="-140" y="-70" width="280" height="140"/></svg>
+      <p class="footer__line gold-script" data-f="closingLine"></p>
       <p class="footer__name" data-f="hisName"></p>
       <p class="footer__small"><span data-f="footer"></span> · <span data-f="madeBy"></span></p>
     </footer>
@@ -252,7 +439,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="js/config.js"></script>
-<script src="js/app.js"></script>
+<script src="js/config.js?v=2"></script>
+<script src="js/app.js?v=2"></script>
 </body>
 </html>

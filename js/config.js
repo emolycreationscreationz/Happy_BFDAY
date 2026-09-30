@@ -14,9 +14,9 @@ window.GIFT = {
   date: "03 · 10 · 2026",          // small date on the envelope & hero
 
   // --- Opening: the envelope ---
-  envelopeTo: "To: My Favourite Person",
-  envelopeFrom: "From: someone who adores you",
-  envelopeHint: "Tap the heart to open",
+  envelopeTo: "A little surprise for",
+  envelopeFrom: "from someone who adores you",
+  envelopeHint: "Tap the seal to open",
   // Lines typed out one by one after the envelope opens
   openingLines: [
     "Hey you…",
@@ -25,6 +25,7 @@ window.GIFT = {
     "and how lucky I am to have you."
   ],
   openButton: "Open your gifts",
+  cardGreeting: "My love,",       // first line on the card inside the envelope
 
   // --- Wishes (first section) ---
   heroKicker: "Today is all about you",
@@ -87,9 +88,10 @@ window.GIFT = {
   nowShowing: "Now Showing",
   songTitle: "Our Song",           // shown on the marquee
   // Paste any YouTube link: youtu.be/…, youtube.com/watch?v=…, shorts, etc. "" = placeholder
-  youtubeUrl: "",
+  youtubeUrl: "https://youtu.be/QCGBu6ubU-o",
   youtubeStart: 0,                 // start the song at this many seconds
   playButton: "Open the curtains",
+  ticket: "Admit Two · You & Me",
 
   // --- Finale: I appreciate you ---
   appreciateKicker: "One last thing",

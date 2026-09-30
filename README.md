@@ -2,12 +2,13 @@
 
 A digital surprise card for Boyfriend's Day, built on the same idea as the *Raikan Cinta* invitation:
 an envelope opening, then a scroll-down story of little "gifts".
-Theme: midnight wine · rose pink · champagne gold. Static site (HTML/CSS/JS), no build step.
+Theme: rose velvet · wine · champagne gold, with roses, fairy lights and falling petals. Static site (HTML/CSS/JS), no build step.
 
 ## The flow
 
-1. **Envelope**: a pink envelope with a beating wax-heart seal. Tap it and the heart bursts, the flap opens,
-   the letter rises and a short message types itself out. Then *Open your gifts*.
+1. **Envelope (full screen)**: the whole screen is a rose-velvet envelope with rose bouquets, a gold frame and a
+   beating wax-heart seal. Tap it and the seal cracks in two, the flap swings open, a card rises out of the
+   envelope and your message types itself out. Then *Open your gifts*.
 2. **Wishes**: "Happy Boyfriend's Day, *name*", the **AI video** in a glowing arch frame (tap 🔈 for sound),
    then the wish cards.
 3. **Nudge**: a wiggling gift box: *"Wait… there's more! Keep scrolling…"*
@@ -18,7 +19,7 @@ Theme: midnight wine · rose pink · champagne gold. Static site (HTML/CSS/JS), 
 7. **I Appreciate You**: flip cards with reasons, a *send a kiss back* button (live counter) and a
    *write something back to me* form. Both go to **Supabase**.
 
-There are also floating hearts across the page, little hearts wherever he taps, and a heart in the corner that fills up as he scrolls.
+There are also falling rose petals and floating hearts across the page, little hearts wherever he taps, and a heart in the corner that fills up as he scrolls.
 
 ## Structure
 
