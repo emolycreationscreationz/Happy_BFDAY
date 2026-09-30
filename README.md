@@ -78,6 +78,12 @@ No build. Connect this repo:
 For a nice WhatsApp preview, add
 `<meta property="og:image" content="https://your-site.netlify.app/assets/photos/…">` to `index.html` once you have the domain.
 
+## After changing CSS or JS
+
+Bump the `?v=` number on the `style.css`, `config.js` and `app.js` links at the bottom/top of
+`index.html` (e.g. `?v=3` → `?v=4`). Browsers keep old files for a few minutes, and a new page
+with an old script can stop the envelope from opening.
+
 ## Test locally
 
 ```
