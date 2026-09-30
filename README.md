@@ -70,6 +70,13 @@ only you can, in the dashboard. The anon key is meant to be public, so it's fine
 
 While the Supabase fields are empty the page runs in **demo mode**: kisses and replies are saved in that browser only.
 
+## Deploy (GitHub Pages)
+
+`.github/workflows/pages.yml` publishes the site on every push.
+One-time setup: repo **Settings → Pages → Source: GitHub Actions**.
+The site is then at `https://<user>.github.io/<repo>/` (the first build takes 1–2 minutes;
+progress is under the **Actions** tab).
+
 ## Deploy (Netlify / Vercel)
 
 No build. Connect this repo:
