@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Outfit:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body class="locked">
 
@@ -238,8 +238,8 @@
     <svg class="env__corner env__corner--tl" viewBox="0 0 260 220" aria-hidden="true"><use href="#roseCorner"/></svg>
     <svg class="env__corner env__corner--tr" viewBox="0 0 260 220" aria-hidden="true"><g transform="translate(260 0) scale(-1 1)"><use href="#roseCorner" width="260" height="220"/></g></svg>
     <div class="env__flap-text">
-      <p class="env__flap-kicker">Happy</p>
-      <p class="env__flap-title">Boyfriend's Day</p>
+      <p class="env__flap-kicker" data-f="titleLine1"></p>
+      <p class="env__flap-title" data-f="titleLine2"></p>
       <p class="env__flap-date" data-f="date"></p>
     </div>
     <svg class="env__posy" viewBox="-140 -70 280 140" aria-hidden="true"><use href="#posy" x="-140" y="-70" width="280" height="140"/></svg>
@@ -265,8 +265,8 @@
 
     <p class="kicker reveal" data-f="heroKicker"></p>
     <h1 class="hero__title">
-      <span class="hero__happy reveal">Happy</span>
-      <span class="hero__day reveal" style="--rd:.15s">Boyfriend's Day</span>
+      <span class="hero__happy reveal" data-f="titleLine1"></span>
+      <span class="hero__day reveal" style="--rd:.15s" data-f="titleLine2"></span>
       <span class="hero__name gold-script reveal" style="--rd:.3s" data-f="hisName"></span>
     </h1>
     <svg class="flourish reveal" style="--rd:.45s" viewBox="0 0 240 30" aria-hidden="true"><use href="#flourish"/></svg>
@@ -417,7 +417,10 @@
   </figure>
 </div>
 
-<script src="js/config.js?v=4"></script>
-<script src="js/app.js?v=4"></script>
+<script src="js/supabase.js?v=5"></script>
+<script src="js/defaults.js?v=5"></script>
+<script src="js/config.js?v=5"></script>
+<script src="js/theme.js?v=5"></script>
+<script src="js/app.js?v=5"></script>
 </body>
 </html>

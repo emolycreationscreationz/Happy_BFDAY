@@ -1,15 +1,13 @@
 /*
- * ============================================================
- *  APPU & AMMU: the card on the main link (no ?card=…)
- * ============================================================
- *  Client cards are made in customize.html and stored in Supabase.
- *  Anything missing here falls back to js/defaults.js.
+ * Template defaults for client cards (…/?card=name).
+ * Every field a card leaves empty falls back to these. The editor (customize.html)
+ * also starts new cards from these. The main-link card is in js/config.js.
  */
-window.GIFT = {
+window.GIFT_DEFAULTS = {
   theme: "blue",                   // blue · rose · red · purple · teal · black
   // --- Names ---
-  hisName: "Appu",                  // his name / nickname (shown big)
-  herName: "Ammu",                  // your name, used on the envelope and to sign the letter
+  hisName: "My Love",                  // his name / nickname (shown big)
+  herName: "Me",                  // your name, used on the envelope and to sign the letter
   pageTitle: "Happy Boyfriend's Day",
   titleLine1: "Happy",               // big script word on the envelope & at the top
   titleLine2: "Boyfriend's Day",     // line under it (e.g. "Birthday", "Anniversary")
@@ -17,7 +15,7 @@ window.GIFT = {
 
   // --- Opening: the envelope ---
   envelopeTo: "A little surprise for",
-  envelopeFrom: "with all my love, from Ammu",
+  envelopeFrom: "from someone who adores you",
   envelopeHint: "Tap the seal to open",
   // Lines typed out one by one after the envelope opens
   openingLines: [
@@ -27,14 +25,14 @@ window.GIFT = {
     "and how lucky I am to have you."
   ],
   openButton: "Open your gifts",
-  cardGreeting: "My Appu,",       // first line on the card inside the envelope
+  cardGreeting: "My love,",       // first line on the card inside the envelope
 
   // --- Wishes (first section) ---
   heroKicker: "Today is all about you",
   // AI video: put the file in assets/video/ and set the path. Leave "" to show a placeholder.
-  video: "assets/video/wishes.mp4",
-  videoWebm: "assets/video/wishes.webm",   // fallback for browsers that can't play MP4
-  videoPoster: "assets/video/wishes-poster.jpg",
+  video: "",
+  videoWebm: "",   // fallback for browsers that can't play MP4
+  videoPoster: "",
   videoAspect: "9/16",             // "9/16" portrait, "16/9" landscape, "1/1" square
   wishesTitle: "My wishes for you",
   wishes: [
@@ -54,27 +52,22 @@ window.GIFT = {
   memoriesTitle: "Our Little Memories",
   memoriesSub: "Every picture, a piece of my favourite story. Tap one to open it.",
   // Main photo in the middle of the heart
-  heartPhoto: { src: "assets/photos/memory-2.jpg", caption: "Us, my favourite place to be", focus: "45% 60%" },
+  heartPhoto: { src: "", caption: "Us, my favourite place to be", focus: "50% 40%" },
   // Up to 9 photos around the heart. Put files in assets/photos/ ("" = soft placeholder).
   // focus = which part of the photo to keep when cropped, e.g. "50% 30%"
-  memories: [
-    // Use different photos from heartPhoto and finalPhoto
-    { src: "assets/photos/memory-1.jpg", caption: "The surprise that made my heart race", focus: "50% 58%" },
-    { src: "assets/photos/memory-3.jpg", caption: "Twinning in white, obviously", focus: "50% 32%" },
-    { src: "assets/photos/memory-4.jpg", caption: "My favourite hug in the whole world", focus: "50% 30%" }
-  ],
+  memories: [],
 
   // --- Gift 2: the letter ---
   letterLabel: "Gift 02",
   letterTitle: "A Letter For You",
-  letterGreeting: "My dearest Appu,",
+  letterGreeting: "My dearest love,",
   letter: [
     "I've tried so many times to put into words what you mean to me, and every time the words feel too small. But today is your day, so I'm going to try anyway.",
     "You came into my life so quietly, and somehow you changed everything. You made ordinary days feel like something worth remembering. You made the hard days lighter just by being there.",
     "Thank you for your patience when I'm difficult, for your laughter when I need it most, and for the way you look at me like I'm the only one in the room. Thank you for choosing me, again and again.",
     "I see how hard you work, how much you carry, and how gently you still treat the people you love. I don't always say it enough, so let me say it now: I am so proud of you.",
     "Whatever tomorrow brings, I hope you always remember this: you are loved, you are appreciated, and you will always have me cheering the loudest for you.",
-    "Happy Boyfriend's Day, Appu. Today, and every day, I appreciate you."
+    "Happy Boyfriend's Day, my love. Today, and every day, I appreciate you."
   ],
   letterClosing: "Forever yours,",
 
@@ -85,7 +78,7 @@ window.GIFT = {
   nowShowing: "Now Showing",
   songTitle: "Our Song",           // shown on the marquee
   // Paste any YouTube link: youtu.be/…, youtube.com/watch?v=…, shorts, etc. "" = placeholder
-  youtubeUrl: "https://youtu.be/QCGBu6ubU-o",
+  youtubeUrl: "",
   youtubeStart: 0,                 // start the song at this many seconds
   playButton: "Open the curtains",
   ticket: "Admit Two · You & Me",
@@ -103,7 +96,7 @@ window.GIFT = {
     { front: "Reason #6", back: "You are simply, wonderfully, you." }
   ],
   // Framed photo near the end ("" src = hidden)
-  finalPhoto: { src: "assets/photos/memory-5.jpg", caption: "Here's to us, Appu. Always.", focus: "55% 35%" },
+  finalPhoto: { src: "", caption: "Here's to us. Always.", focus: "50% 40%" },
 
   closingLine: "Happy Boyfriend's Day",
   footer: "Made with love",

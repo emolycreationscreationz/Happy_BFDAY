@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Card Studio · Emoly Creations</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#050a18">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 29S3 20.5 3 11.5A6.5 6.5 0 0 1 16 8a6.5 6.5 0 0 1 13 3.5C29 20.5 16 29 16 29Z' fill='%23e9c27a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="css/customize.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 29S3 20.5 3 11.5A6.5 6.5 0 0 1 16 8a6.5 6.5 0 0 1 13 3.5C29 20.5 16 29 16 29Z"/></svg>
+    <div><b>Card Studio</b><small>Emoly Creations</small></div>
+  </div>
+  <button class="btn btn--ghost btn--sm" id="signOut" type="button" hidden>Sign out</button>
+</header>
+
+<!-- ============ Login ============ -->
+<main class="view" id="viewLogin" hidden>
+  <form class="panel login" id="loginForm">
+    <h1 class="script">Welcome back</h1>
+    <p class="muted">Sign in to create and edit cards.</p>
+    <label>Email<input type="email" id="loginEmail" autocomplete="username" required></label>
+    <label>Password<input type="password" id="loginPass" autocomplete="current-password" required></label>
+    <button class="btn" type="submit" id="loginBtn">Sign in</button>
+    <p class="error" id="loginErr" hidden></p>
+  </form>
+</main>
+
+<!-- ============ Card list ============ -->
+<main class="view" id="viewList" hidden>
+  <div class="list-head">
+    <h1 class="script">Your cards</h1>
+    <button class="btn" id="newCard" type="button">+ New card</button>
+  </div>
+  <div class="cards" id="cardList"></div>
+  <p class="muted empty" id="emptyList" hidden>No cards yet. Tap <b>+ New card</b> to make the first one.</p>
+</main>
+
+<!-- ============ Editor ============ -->
+<main class="view" id="viewEdit" hidden>
+  <div class="list-head">
+    <button class="btn btn--ghost btn--sm" id="backToList" type="button">← All cards</button>
+    <h1 class="script" id="editTitle">New card</h1>
+  </div>
+  <form id="editForm" autocomplete="off" novalidate></form>
+  <div class="actionbar">
+    <span class="actionbar__status" id="saveStatus"></span>
+    <button class="btn btn--ghost" id="previewBtn" type="button">Preview</button>
+    <button class="btn" id="saveBtn" type="button">Save</button>
+  </div>
+</main>
+
+<p class="setup-warn" id="setupWarn" hidden>Supabase isn't set up. Fill in <code>js/supabase.js</code> first.</p>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase.js?v=5"></script>
+<script src="js/defaults.js?v=5"></script>
+<script src="js/theme.js?v=5"></script>
+<script src="js/customize.js?v=1"></script>
+</body>
+</html>

@@ -1,7 +1,8 @@
 (function () {
   'use strict';
 
-  var C = window.GIFT || {};
+  var C = {};                     // filled in boot(): defaults + this card's data
+  var CARD = new URLSearchParams(location.search).get('card') || '';
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reducedMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -16,13 +17,14 @@
     return e;
   }
   /* ---------- Supabase (REST, no library needed) ---------- */
-  var SB = (C.supabaseUrl && C.supabaseAnonKey) ? C.supabaseUrl.replace(/\/+$/, '') + '/rest/v1/' : '';
+  var SBC = window.SUPABASE_CONFIG || {};
+  var SB = (SBC.url && SBC.key) ? SBC.url.replace(/\/+$/, '') + '/rest/v1/' : '';
   function sb(path, body) {
     if (!SB) return Promise.reject(new Error('demo'));
-    var h = { apikey: C.supabaseAnonKey, 'Content-Type': 'application/json' };
+    var h = { apikey: SBC.key, 'Content-Type': 'application/json' };
     // Legacy anon keys are JWTs and go in Authorization too; new sb_publishable_ keys don't
-    if (/^eyJ/.test(C.supabaseAnonKey)) h.Authorization = 'Bearer ' + C.supabaseAnonKey;
-    h.Prefer = 'return=minimal';
+    if (/^eyJ/.test(SBC.key)) h.Authorization = 'Bearer ' + SBC.key;
+    if (path.indexOf('rpc/') !== 0) h.Prefer = 'return=minimal';
     return fetch(SB + path, { method: 'POST', headers: h, body: JSON.stringify(body || {}) }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.status === 204 ? null : r.json().catch(function () { return null; });
@@ -39,7 +41,7 @@
   }
 
   /* ---------- Heart burst ---------- */
-  var COLORS = ['#5c98ff', '#8fb8ff', '#d1e2ff', '#f3c77a', '#1e68e9', '#fff3d6'];
+  var COLORS = ['#5c98ff', '#8fb8ff', '#d1e2ff', '#f3c77a', '#1e68e9', '#fff3d6'];   // recoloured in boot()
   function burst(x, y, n, spread) {
     if (reducedMotion) return;
     var b = el('div', 'burst');
@@ -128,7 +130,7 @@
       var r = $('#seal').getBoundingClientRect();
       burst(r.left + r.width / 2, r.top + r.height / 2, 34, 200);
       env.classList.add('open');
-      sb('visits', { user_agent: navigator.userAgent.slice(0, 300) }).catch(function () {});
+      sb('visits', { card_id: CARD || 'main', user_agent: navigator.userAgent.slice(0, 300) }).catch(function () {});
       setTimeout(function () { env.classList.add('rise'); }, 1200 * speed);
       setTimeout(function () {
         env.classList.add('read');
@@ -168,7 +170,7 @@
       heroVideo = null;
     }
 
-    if (!C.video) { placeholder(); }
+    if (!C.video) { frame.remove(); return listWishes(); }
     else {
       var v = el('video');
       v.muted = true; v.loop = true; v.preload = 'auto';
@@ -195,6 +197,10 @@
       }
     }
 
+    listWishes();
+  }
+
+  function listWishes() {
     var list = $('#wishes');
     (C.wishes || []).forEach(function (w, i) {
       var li = el('li', 'wish');
@@ -331,7 +337,13 @@
     }
 
     var id = youtubeId(C.youtubeUrl);
-    if (!id) $('#screenIdleText').textContent = 'Our song is coming soon…';
+    if (!id) {
+      // No song on this card: drop the cinema and the "one more gift" hint that leads to it
+      $('#cinema').remove();
+      var hint = $('#letter .nudge-mini');
+      if (hint) hint.remove();
+      return;
+    }
 
     var th = $('#theater');
     $('#playSong').addEventListener('click', function (e) {
@@ -459,8 +471,9 @@
     var cv = $('#ambient'), cx = cv.getContext('2d');
     if (!cx) return;
     var W, H, dpr, parts = [];
-    var heartCols = ['79,144,255', '143,184,255', '209,226,255', '233,194,122'];
-    var petalCols = [['#6fa4ff', '#0e45a5'], ['#9fc2ff', '#2a68d4'], ['#3071e0', '#0a2d6a'], ['#c2d8ff', '#3071e0'], ['#fff2cf', '#c9953f'], ['#f3d48f', '#a87a32']];
+    var heartCols = ['79,144,255', '143,184,255', '209,226,255', '233,194,122'].map(tint);
+    var petalCols = [['#6fa4ff', '#0e45a5'], ['#9fc2ff', '#2a68d4'], ['#3071e0', '#0a2d6a'], ['#c2d8ff', '#3071e0'], ['#fff2cf', '#c9953f'], ['#f3d48f', '#a87a32']]
+      .map(function (pair) { return pair.map(tint); });
     function size() {
       dpr = Math.min(2, window.devicePixelRatio || 1);
       W = innerWidth; H = innerHeight;
@@ -548,17 +561,60 @@
     })();
   }
 
-  fill();
-  fairy();
-  fireworks();
-  hero();
-  memories();
-  letter();
-  cinema();
-  finale();
-  reveal();
-  progress();
-  tapHearts();
-  ambient();
-  opener();
+  /* ---------- Boot: load the card, apply its theme, then start ---------- */
+  function tint(c) { return window.Theme ? Theme.text(c, C.theme) : c; }
+
+  function merge(base, over) {
+    var out = {}, k;
+    for (k in base) out[k] = base[k];
+    for (k in over) if (over[k] != null && over[k] !== '') out[k] = over[k];
+    return out;
+  }
+
+  function loadCard() {
+    var defaults = window.GIFT_DEFAULTS || {};
+    if (!CARD) return Promise.resolve(merge(defaults, window.GIFT || {}));
+    return sb('rpc/get_card', { p_slug: CARD }).then(function (data) {
+      if (!data) throw new Error('not found');
+      return merge(defaults, data);
+    });
+  }
+
+  function start() {
+    COLORS = COLORS.map(tint);
+    PH = PH.map(function (pair) { return pair.map(tint); });
+    fill();
+    fairy();
+    fireworks();
+    hero();
+    memories();
+    letter();
+    cinema();
+    finale();
+    reveal();
+    progress();
+    tapHearts();
+    ambient();
+    opener();
+    document.body.classList.remove('loading');
+  }
+
+  function missing() {
+    document.body.classList.remove('loading');
+    document.body.classList.add('missing');
+    var t = $('.env__to');
+    if (t) t.textContent = 'This card could not be found';
+    var n = $('.env__name');
+    if (n) n.textContent = 'Oops';
+    var f = $('.env__from');
+    if (f) f.textContent = 'Please check the link you were sent.';
+  }
+
+  document.body.classList.add('loading');
+  loadCard().then(function (data) {
+    C = data;
+    var preview = new URLSearchParams(location.search).get('theme');   // e.g. ?theme=rose to try a colour
+    if (preview && window.Theme && Theme.THEMES[preview]) C.theme = preview;
+    return window.Theme ? Theme.apply(C.theme) : null;
+  }).then(start, missing);
 })();

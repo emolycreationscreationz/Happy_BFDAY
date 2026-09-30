@@ -23,16 +23,49 @@ There are also falling rose petals and floating hearts across the page, little h
 ## Structure
 
 ```
-index.html            page structure
-css/style.css         design & animations (colours at the top in :root)
-js/config.js          ⭐ ALL TEXT & SETTINGS: edit this file
-js/app.js             envelope, collage, cinema, Supabase, animations
-assets/photos/        your photos
-assets/video/         your AI video
-supabase/schema.sql   database setup (run once in Supabase)
+index.html                  the card page
+customize.html              ⭐ Card Studio: create & edit client cards (login)
+css/style.css               card design & animations (designed in blue)
+css/customize.css           Card Studio design
+js/config.js                the main-link card (Appu & Ammu)
+js/defaults.js              template text used by new client cards
+js/supabase.js              Supabase URL + publishable key (shared)
+js/theme.js                 colour themes (blue, rose, red, purple, teal, black)
+js/app.js                   the card: loads ?card=…, envelope, collage, cinema…
+js/customize.js             Card Studio logic (login, uploads, save)
+assets/photos, assets/video media for the main-link card
+supabase/schema.sql         database + storage setup (run once in Supabase)
 ```
 
-## Edit the content
+## Client cards (Card Studio)
+
+One site, many couples. Each card has its own link: `https://<site>/?card=raj-priya`.
+The main link (no `?card=`) keeps showing the card in `js/config.js`.
+
+**One-time setup**
+1. Supabase → **SQL Editor** → run all of `supabase/schema.sql` (safe to re-run).
+2. Supabase → **Authentication → Users → Add user → Create new user**: your email + a password,
+   tick **Auto Confirm User**.
+3. Supabase → **Authentication → Sign In / Providers** → turn **off** "Allow new users to sign up",
+   so nobody else can make an account.
+
+**Making a card**
+1. Open `https://<site>/customize.html` and sign in.
+2. **+ New card** → fill in the names (the link name is suggested from them), pick a colour theme,
+   write the text, upload photos and a video, paste the YouTube link → **Save**.
+3. **Preview** opens the card. **Copy link** on the card list gives you the link to send.
+
+Photos are shrunk and re-saved in the browser before upload (fast to load, and hidden data such as
+GPS location is removed). Tap a photo in the editor to choose which part stays visible when it's
+cropped. Videos up to 50 MB (under 15 MB loads best on phones). No video → the video frame is
+hidden; no YouTube link → the cinema is hidden.
+
+The card list shows how many times each card was opened and when.
+
+**Privacy:** visitors can only fetch one card by its exact link name. They can't list other cards
+or read who opened what. Uploaded photos/videos are public by link (like any image on a website).
+
+## Edit the main-link card
 
 Open `js/config.js`. Names, opening lines, wishes, photo captions, the letter, reasons and button text are all there.
 
@@ -49,16 +82,11 @@ Open `js/config.js`. Names, opening lines, wishes, photo captions, the letter, r
   `youtubeStart` starts it at a given second (a `?t=45` in the link works too).
 - **Colours**: the variables at the top of `css/style.css` (`--rose`, `--gold`, `--bg`, …).
 
-## Supabase ("he opened it")
+## Supabase
 
-1. Create a free project at [supabase.com](https://supabase.com).
-2. **SQL Editor → New query**, paste all of `supabase/schema.sql`, **Run**.
-3. Copy the **Project URL** and the **publishable** (or legacy anon) key into
-   `supabaseUrl` and `supabaseAnonKey` in `js/config.js`.
-
-Every time the envelope is opened, a row (time + device) is added to the `visits` table.
-See it in **Table Editor**. The page can only add rows, never read them, and the publishable key
-is meant to be public. Leave both fields empty to turn this off.
+URL and publishable key live in `js/supabase.js`. Tables: `cards` (client cards), `visits`
+(a row each time an envelope is opened, per card). Storage bucket: `card-media`.
+See `supabase/schema.sql`.
 
 ## Deploy (GitHub Pages)
 
@@ -80,8 +108,7 @@ For a nice WhatsApp preview, add
 
 ## After changing CSS or JS
 
-Bump the `?v=` number on the `style.css`, `config.js` and `app.js` links at the bottom/top of
-`index.html` (e.g. `?v=3` → `?v=4`). Browsers keep old files for a few minutes, and a new page
+Bump the `?v=` number on the CSS and JS links in `index.html` (and `customize.html`) (e.g. `?v=3` → `?v=4`). Browsers keep old files for a few minutes, and a new page
 with an old script can stop the envelope from opening.
 
 ## Test locally
